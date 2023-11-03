@@ -12,6 +12,7 @@ import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -39,7 +40,11 @@ public class ContratServiceImpl implements  IContratService{
     @Override
     public Contrat retrieveContrat(Integer idContrat) {
         log.info("debut methode retrieveContrat");
-        return contratRepository.findById(idContrat).get();
+        Optional<Contrat> optionalContrat = contratRepository.findById(idContrat);
+        if (optionalContrat.isPresent()) {
+            return optionalContrat.get();
+        }
+        throw new RuntimeException("Contrat not found for id: " + idContrat);
     }
 
     @Override
@@ -50,10 +55,7 @@ public class ContratServiceImpl implements  IContratService{
 
     @Override
     public Contrat addContrat(Contrat c) {
-       // start date t1
         contratRepository.save(c);
-
-        // te =t2-t1;
         return c;
     }
 
