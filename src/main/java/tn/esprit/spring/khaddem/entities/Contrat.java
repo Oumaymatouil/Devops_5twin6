@@ -1,9 +1,12 @@
 package tn.esprit.spring.khaddem.entities;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Builder
 @Entity
 public class Contrat implements Serializable {
 
