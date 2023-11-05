@@ -21,8 +21,8 @@ public class Departement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idDepartement;
     private String nomDepart;
-    //@OneToMany(mappedBy = "departement")
-    //@JsonIgnore
-    //private List<Etudiant> etudiants;
+    @OneToMany(mappedBy = "departement")
+    @JsonIgnore
+    private List<Etudiant> etudiants;
 
 }
