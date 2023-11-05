@@ -2,8 +2,8 @@ package tn.esprit.spring.khaddem.services;
 
 import org.springframework.data.repository.query.Param;
 import tn.esprit.spring.khaddem.entities.Etudiant;
-//import tn.esprit.spring.khaddem.entities.Niveau;
-//import tn.esprit.spring.khaddem.entities.Specialite;
+import tn.esprit.spring.khaddem.entities.Niveau;
+import tn.esprit.spring.khaddem.entities.Specialite;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ public interface IEtudiantService {
     Etudiant retrieveEtudiant(Integer idEtudiant);
     void removeEtudiant(Integer idEtudiant);
 
-   // public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) ;
+    public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) ;
 
-   // List<Etudiant> findByDepartementIdDepartement(Integer idDepartement);
+    List<Etudiant> findByDepartementIdDepartement(Integer idDepartement);
 
-//    List<Etudiant> findByEquipesNiveau(Niveau niveau);
-//
-//    //JPQL
-//    List<Etudiant> retrieveEtudiantsByContratSpecialite(Specialite specialite);
+    List<Etudiant> findByEquipesNiveau(Niveau niveau);
 
-   // List<Etudiant> retrieveEtudiantsByContratSpecialiteSQL(String specialite);
+    //JPQL
+    List<Etudiant> retrieveEtudiantsByContratSpecialite(Specialite specialite);
 
-   // Etudiant addAndAssignEtudiantToEquipeAndContract (Etudiant e, Integer idContrat , Integer idEquipe);
+    List<Etudiant> retrieveEtudiantsByContratSpecialiteSQL(String specialite);
 
-   // List<Etudiant> getEtudiantsByDepartement (Integer idDepartement);
+    Etudiant addAndAssignEtudiantToEquipeAndContract (Etudiant e, Integer idContrat , Integer idEquipe);
+
+    List<Etudiant> getEtudiantsByDepartement (Integer idDepartement);
 
 }

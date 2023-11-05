@@ -42,14 +42,14 @@ public class Etudiant  implements Serializable {
     public Etudiant() {
     }
 
-    public Etudiant(Integer idEtudiant, String prenomE, String nomE, Option op/*, Departement departement, List<Equipe> equipes, List<Contrat> contrats*/) {
+    public Etudiant(Integer idEtudiant, String prenomE, String nomE, Option op, Departement departement, List<Equipe> equipes, List<Contrat> contrats) {
         this.idEtudiant = idEtudiant;
         this.prenomE = prenomE;
         this.nomE = nomE;
         this.op = op;
-//        this.departement = departement;
-//        this.equipes = equipes;
-//        this.contrats = contrats;
+        this.departement = departement;
+        this.equipes = equipes;
+        this.contrats = contrats;
     }
 
     public Integer getIdEtudiant() {
@@ -84,40 +84,40 @@ public class Etudiant  implements Serializable {
         this.op = op;
     }
 
-//    public Departement getDepartement() {
-//        return departement;
-//    }
-//
-//    public void setDepartement(Departement departement) {
-//        this.departement = departement;
-//    }
-//
-//    public List<Equipe> getEquipes() {
-//        return equipes;
-//    }
-//
-//    public void setEquipes(List<Equipe> equipes) {
-//        this.equipes = equipes;
-//    }
-//
-//    public List<Contrat> getContrats() {
-//        return contrats;
-//    }
-//
-//    public void setContrats(List<Contrat> contrats) {
-//        this.contrats = contrats;
-//    }
-//
-//            @ManyToOne
-//            @JsonIgnore
-//            private Departement departement;
-//    @ManyToMany
-//    @JsonIgnore
-//    private List<Equipe> equipes;
-//    @OneToMany(mappedBy = "etudiant")
-//    @JsonIgnore
-//    private List<Contrat> contrats;
-//
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public List<Equipe> getEquipes() {
+        return equipes;
+    }
+
+    public void setEquipes(List<Equipe> equipes) {
+        this.equipes = equipes;
+    }
+
+    public List<Contrat> getContrats() {
+        return contrats;
+    }
+
+    public void setContrats(List<Contrat> contrats) {
+        this.contrats = contrats;
+    }
+
+            @ManyToOne
+            @JsonIgnore
+            private Departement departement;
+    @ManyToMany
+    @JsonIgnore
+    private List<Equipe> equipes;
+    @OneToMany(mappedBy = "etudiant")
+    @JsonIgnore
+    private List<Contrat> contrats;
+
 
 
 }
