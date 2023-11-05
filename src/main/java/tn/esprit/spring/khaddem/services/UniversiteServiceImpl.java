@@ -15,8 +15,8 @@ import java.util.List;
 public class UniversiteServiceImpl implements  IUniversiteService{
     @Autowired
     UniversiteRepository universiteRepository;
-//    @Autowired
-//    DepartementRepository departementRepository;
+    @Autowired
+    DepartementRepository departementRepository;
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
@@ -40,11 +40,11 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         return universiteRepository.findById(idUniversite).get();
     }
 
-//    @Transactional
-//    public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
-//        Universite universite =universiteRepository.findById(universiteId).get();
-//        Departement departement=departementRepository.findById(departementId).get();
-//        universite.getDepartements().add(departement);
-//        log.info("departements number "+universite.getDepartements().size());
-//    }
+    @Transactional
+    public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
+        Universite universite =universiteRepository.findById(universiteId).get();
+        Departement departement=departementRepository.findById(departementId).get();
+        universite.getDepartements().add(departement);
+        log.info("departements number "+universite.getDepartements().size());
+    }
 }
