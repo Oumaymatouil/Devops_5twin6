@@ -36,7 +36,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Integer> {
 
     List<Etudiant> findByDepartementIdDepartement(Integer idDepartement);
 
-   List<Etudiant> findByEquipesNiveau(Niveau niveau);
+
 
    Etudiant findByNomEAndPrenomE(String nomE, String prenomE);
 
