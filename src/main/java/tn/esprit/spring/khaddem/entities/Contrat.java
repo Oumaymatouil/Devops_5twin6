@@ -1,5 +1,6 @@
 package tn.esprit.spring.khaddem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 
 import javax.persistence.*;
