@@ -22,9 +22,9 @@ public class Contrat implements Serializable {
     private Specialite specialite;
     private Boolean archived;
     private Integer montantContrat;
-//    @ManyToOne
-   // @JsonIgnore
-//    private  Etudiant etudiant;
+    @ManyToOne
+    @JsonIgnore
+    private  Etudiant etudiant;
 
     public Integer getIdContrat() {
         return idContrat;
@@ -50,9 +50,9 @@ public class Contrat implements Serializable {
         return montantContrat;
     }
 
-//    public Etudiant getEtudiant() {
-//        return etudiant;
-//    }
+    public Etudiant getEtudiant() {
+        return etudiant;
+    }
 
     public void setIdContrat(Integer idContrat) {
         this.idContrat = idContrat;
@@ -78,9 +78,9 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
     }
 
-//    public void setEtudiant(Etudiant etudiant) {
-//        this.etudiant = etudiant;
-//    }
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
+    }
 
     public Contrat() {
     }
@@ -94,17 +94,17 @@ public class Contrat implements Serializable {
                 ", specialite=" + specialite +
                 ", archived=" + archived +
                 ", montantContrat=" + montantContrat +
-               // ", etudiant=" + etudiant +
+                ", etudiant=" + etudiant +
                 '}';
     }
 
-    public Contrat(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archived, Integer montantContrat /*,Etudiant etudiant*/) {
+    public Contrat(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archived, Integer montantContrat ,Etudiant etudiant) {
         this.idContrat = idContrat;
         this.dateDebutContrat = dateDebutContrat;
         this.dateFinContrat = dateFinContrat;
         this.specialite = specialite;
         this.archived = archived;
         this.montantContrat = montantContrat;
-      //  this.etudiant = etudiant;
+        this.etudiant = etudiant;
     }
 }
