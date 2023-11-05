@@ -56,4 +56,11 @@ public class DetailEquipeRestController {
         detailEquipe.setThematique(detailEquipeDTO.getThematique());
         return detailEquipeService.updateDetailEquipe(detailEquipe);
     }
+
+    // http://localhost:8089/Kaddem/equipe/detail-retrieve-by-equipe/8
+   /* @GetMapping("/retrieve-detail-by-equipe/{detail-equipe-id}")
+    @ResponseBody
+    public DetailEquipe retrieveDetailEquipeByEquipeId(@PathVariable("detail-equipe-id") Integer equipeId) {
+        return detailEquipeService.retrieveDetailEquipeByEquipeId(equipeId);
+    }*/
 }

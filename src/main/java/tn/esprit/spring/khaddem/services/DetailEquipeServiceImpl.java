@@ -10,10 +10,12 @@ import java.util.Optional;
 @Service
 public class DetailEquipeServiceImpl implements IDetailEquipeService {
 
+    //@Autowired
+    //EquipeRepository equipeRepository;
 
     private final DetailEquipeRepository detailEquipeRepository;
 
-    public DetailEquipeServiceImpl( DetailEquipeRepository detailEquipeRepository){
+    public DetailEquipeServiceImpl(DetailEquipeRepository detailEquipeRepository) {
         this.detailEquipeRepository = detailEquipeRepository;
     }
 
@@ -44,7 +46,10 @@ public class DetailEquipeServiceImpl implements IDetailEquipeService {
         return detailEquipeOptional.orElse(null);
     }
 
-
-
+    /* @Override
+    public DetailEquipe retrieveDetailEquipeByEquipeId(Integer idEquipe) {
+        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
+        return equipeOptional.map(Equipe::getDetailEquipe).orElse(null);
+    }*/
 
 }

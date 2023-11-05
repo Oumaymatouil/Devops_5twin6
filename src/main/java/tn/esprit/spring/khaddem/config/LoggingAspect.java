@@ -22,6 +22,12 @@ public class LoggingAspect {
     }
 
 
+    //    @AfterReturning("execution( * tn.esprit.spring.khaddem.services.DepartementServiceImpl.retrieveDepartement(..))")
+    //    public void logMethodExit1(JoinPoint joinPoint) {
+    //        String name = joinPoint.getSignature().getName();
+    //        log.info("Out of method without errors : " + name );
+    //    }
+    
     @AfterThrowing("execution(* tn.esprit.spring.khaddem.services.*.*(..))")
     public void logMethodExit2(JoinPoint joinPoint) {
         String name = joinPoint.getSignature().getName();
