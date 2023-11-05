@@ -46,14 +46,14 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateEtudiant(@RequestBody Contrat c) {
+    public Contrat updateEtudiant(@RequestBody ContratDTO c) {
         Contrat contrat = new Contrat();
         contrat.setMontantContrat(c.getMontantContrat());
         contrat.setDateDebutContrat(c.getDateDebutContrat());
         contrat.setDateFinContrat(c.getDateFinContrat());
         contrat.setArchived(c.getArchived());
         contrat.setSpecialite(c.getSpecialite());
-        return contratService.updateContrat(c);
+        return contratService.updateContrat(contrat);
     }
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
