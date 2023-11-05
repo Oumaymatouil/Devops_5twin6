@@ -33,15 +33,27 @@ public class ContratRestController {
     // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
-    public Contrat addContrat(@RequestBody Contrat c) {
-        return contratService.addContrat(c);
+    public Contrat addContrat(@RequestBody ContratDTO c) {
+        Contrat contrat = new Contrat();
+        contrat.setMontantContrat(c.getMontantContrat());
+        contrat.setDateDebutContrat(c.getDateDebutContrat());
+        contrat.setDateFinContrat(c.getDateFinContrat());
+        contrat.setArchived(c.getArchived());
+        contrat.setSpecialite(c.getSpecialite());
+        return contratService.addContrat(contrat);
     }
 
     // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
-    public Contrat updateEtudiant(@RequestBody Contrat cont) {
-        return contratService.updateContrat(cont);
+    public Contrat updateEtudiant(@RequestBody Contrat c) {
+        Contrat contrat = new Contrat();
+        contrat.setMontantContrat(c.getMontantContrat());
+        contrat.setDateDebutContrat(c.getDateDebutContrat());
+        contrat.setDateFinContrat(c.getDateFinContrat());
+        contrat.setArchived(c.getArchived());
+        contrat.setSpecialite(c.getSpecialite());
+        return contratService.updateContrat(c);
     }
 
     // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
