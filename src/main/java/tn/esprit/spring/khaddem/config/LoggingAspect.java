@@ -3,6 +3,7 @@ package tn.esprit.spring.khaddem.config;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -21,13 +22,12 @@ public class LoggingAspect {
         log.info("In method : " + name + " : ");
     }
 
+    @AfterReturning("execution( * tn.esprit.spring.khaddem.services.DepartementServiceImpl.retrieveDepartement(..))")
+    public void logMethodExit1(JoinPoint joinPoint) {
+        String name = joinPoint.getSignature().getName();
+        log.info("Out of method without errors : " + name );
+    }
 
-    //    @AfterReturning("execution( * tn.esprit.spring.khaddem.services.DepartementServiceImpl.retrieveDepartement(..))")
-    //    public void logMethodExit1(JoinPoint joinPoint) {
-    //        String name = joinPoint.getSignature().getName();
-    //        log.info("Out of method without errors : " + name );
-    //    }
-    
     @AfterThrowing("execution(* tn.esprit.spring.khaddem.services.*.*(..))")
     public void logMethodExit2(JoinPoint joinPoint) {
         String name = joinPoint.getSignature().getName();
