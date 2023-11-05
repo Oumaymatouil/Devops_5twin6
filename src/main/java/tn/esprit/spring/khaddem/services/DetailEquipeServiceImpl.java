@@ -1,11 +1,8 @@
 package tn.esprit.spring.khaddem.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
-//import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
-//import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +10,12 @@ import java.util.Optional;
 @Service
 public class DetailEquipeServiceImpl implements IDetailEquipeService {
 
-    @Autowired
-    DetailEquipeRepository detailEquipeRepository;
-    //@Autowired
-    //EquipeRepository equipeRepository;
 
+    private final DetailEquipeRepository detailEquipeRepository;
+
+    public DetailEquipeServiceImpl( DetailEquipeRepository detailEquipeRepository){
+        this.detailEquipeRepository = detailEquipeRepository;
+    }
 
     @Override
     public List<DetailEquipe> retrieveAllDetailEquipe() {
@@ -47,10 +45,6 @@ public class DetailEquipeServiceImpl implements IDetailEquipeService {
     }
 
 
-   /* @Override
-    public DetailEquipe retrieveDetailEquipeByEquipeId(Integer idEquipe) {
-        Optional<Equipe> equipeOptional = equipeRepository.findById(idEquipe);
-        return equipeOptional.map(Equipe::getDetailEquipe).orElse(null);
-    }*/
+
 
 }

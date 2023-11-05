@@ -1,13 +1,10 @@
 package tn.esprit.spring.khaddem.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.DetailEquipeDTO;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
-//import tn.esprit.spring.khaddem.entities.Equipe;
 import tn.esprit.spring.khaddem.services.IDetailEquipeService;
-//import tn.esprit.spring.khaddem.services.IEquipeService;
 
 import java.util.List;
 
@@ -17,7 +14,6 @@ import java.util.List;
 public class DetailEquipeRestController {
 
     IDetailEquipeService detailEquipeService;
-    //IEquipeService equipeService;
 
     // http://localhost:8089/Kaddem/equipe/retrieve-all-detail-equipes
     @GetMapping("/retrieve-all-detail-equipe")
@@ -35,12 +31,7 @@ public class DetailEquipeRestController {
     }
 
 
-    // http://localhost:8089/Kaddem/equipe/detail-retrieve-by-equipe/8
-   /* @GetMapping("/retrieve-detail-by-equipe/{detail-equipe-id}")
-    @ResponseBody
-    public DetailEquipe retrieveDetailEquipeByEquipeId(@PathVariable("detail-equipe-id") Integer equipeId) {
-        return detailEquipeService.retrieveDetailEquipeByEquipeId(equipeId);
-    }*/
+
 
 
     // http://localhost:8089/Kaddem/equipe/add-equipe
