@@ -60,7 +60,7 @@ public class EquipeServiceImpl implements IEquipeService {
                     Integer nbEtudiantsAvecContratsActifs = 0;
                     for (Etudiant etudiant : etudiants) {
                      log.debug("in for etudiants");
-                        List<Contrat> contrats = etudiant.getContrats();
+                        //List<Contrat> contrats = etudiant.getContrats();
                         List<Contrat> contrats = contratRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant())  ;
                         for (Contrat contrat : contrats) {
                             log.debug("in contrat");
@@ -69,8 +69,9 @@ public class EquipeServiceImpl implements IEquipeService {
                             long difference_In_Time = contrat.getDateFinContrat().getTime() -contrat.getDateDebutContrat().getTime() ;
                             long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));
                             log.debug("difference_In_Years: "+difference_In_Years);
-                            if ((contrat.getArchived() == null || contrat.getArchived() == false) && (difference_In_Years > 1)) {
-                                	contratsActifs.add(contrat);
+                            if ((contrat.getArchived() == null || contrat.getArchived() == false) && (difference_In_Years > 1))
+                            {
+                                //contratsActifs.add(contrat);
                                 nbEtudiantsAvecContratsActifs++;
                                 break;
                             }
@@ -102,7 +103,7 @@ public class EquipeServiceImpl implements IEquipeService {
             }
         }
         log.info("fin methode evoluerEquipes");
-         t2 : recuperer date a linstant t2 : te=t2-t1
+         //t2 : recuperer date a linstant t2 : te=t2-t1
     }
 
 }
