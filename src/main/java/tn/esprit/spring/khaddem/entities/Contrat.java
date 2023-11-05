@@ -22,9 +22,7 @@ public class Contrat implements Serializable {
     private Specialite specialite;
     private Boolean archived;
     private Integer montantContrat;
-//    @ManyToOne
-   // @JsonIgnore
-//    private  Etudiant etudiant;
+
 
     public Integer getIdContrat() {
         return idContrat;
@@ -50,9 +48,6 @@ public class Contrat implements Serializable {
         return montantContrat;
     }
 
-//    public Etudiant getEtudiant() {
-//        return etudiant;
-//    }
 
     public void setIdContrat(Integer idContrat) {
         this.idContrat = idContrat;
@@ -78,9 +73,7 @@ public class Contrat implements Serializable {
         this.montantContrat = montantContrat;
     }
 
-//    public void setEtudiant(Etudiant etudiant) {
-//        this.etudiant = etudiant;
-//    }
+
 
     public Contrat() {
     }
@@ -94,7 +87,6 @@ public class Contrat implements Serializable {
                 ", specialite=" + specialite +
                 ", archived=" + archived +
                 ", montantContrat=" + montantContrat +
-               // ", etudiant=" + etudiant +
                 '}';
     }
 
@@ -105,6 +97,5 @@ public class Contrat implements Serializable {
         this.specialite = specialite;
         this.archived = archived;
         this.montantContrat = montantContrat;
-      //  this.etudiant = etudiant;
     }
 }
