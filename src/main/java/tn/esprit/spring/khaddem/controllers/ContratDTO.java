@@ -15,6 +15,9 @@ public class ContratDTO {
     private Specialite specialite;
     private Boolean archived;
     private Integer montantContrat;
+//    @ManyToOne
+    // @JsonIgnore
+//    private  Etudiant etudiant;
 
 
 

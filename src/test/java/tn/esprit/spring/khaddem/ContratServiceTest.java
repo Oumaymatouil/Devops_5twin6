@@ -12,36 +12,32 @@ import tn.esprit.spring.khaddem.entities.Specialite;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.services.ContratServiceImpl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class ContratServiceTest {
+class ContratServiceTest {
 
     @Mock
-    ContratRepository contratRepository ;
+    ContratRepository contratRepository;
 
     @InjectMocks
     ContratServiceImpl contratService;
 
     Contrat c = Contrat.builder().idContrat(1).archived(true).montantContrat(800).dateDebutContrat(new Date()).dateFinContrat(new Date()).specialite(Specialite.RESEAU).build();
 
-    List<Contrat> list= new ArrayList<Contrat>(){
+    List<Contrat> list = new ArrayList<Contrat>() {
         {
-            add(Contrat.builder().idContrat(2).archived(false).montantContrat(1400).dateDebutContrat(new Date()).dateFinContrat(new Date()).specialite(Specialite.IA).build());
-            add(Contrat.builder().idContrat(3).archived(true).montantContrat(1200).dateDebutContrat(new Date()).dateFinContrat(new Date()).specialite(Specialite.CLOUD).build());
+            add(Contrat.builder().idContrat(2).archived(false).montantContrat(1400).dateDebutContrat(new Date(1/10/2023)).dateFinContrat(new Date()).specialite(Specialite.IA).build());
+            add(Contrat.builder().idContrat(3).archived(true).montantContrat(1200).dateDebutContrat(new Date(1/10/2023)).dateFinContrat(new Date()).specialite(Specialite.CLOUD).build());
         }
     };
 
     @Test
-    public void retrieveContratTest(){
+    void retrieveContratTest() {
         Mockito.when(contratRepository.findById(1)).thenReturn(Optional.of(c));
         Contrat contrat1 = contratService.retrieveContrat(1);
         assertNotNull(contrat1);
@@ -49,7 +45,7 @@ public class ContratServiceTest {
     }
 
     @Test
-    public void retrieveAllContratsTest(){
+    void retrieveAllContratsTest() {
         Mockito.when(contratRepository.findAll()).thenReturn(list);
         List<Contrat> contrats = contratService.retrieveAllContrats();
         assertNotNull(contrats);
@@ -57,7 +53,7 @@ public class ContratServiceTest {
     }
 
     @Test
-    public void updateContratTest() {
+    void updateContratTest() {
         // Create a sample Contrat to be updated
         Contrat updatedContrat = Contrat.builder()
                 .idContrat(1)
@@ -80,7 +76,7 @@ public class ContratServiceTest {
     }
 
     @Test
-    public void removeContratTest() {
+    void removeContratTest() {
         int contratId = 1; // ID of the Contrat to be removed
 
         // Mock the repository's deleteById method
@@ -93,7 +89,7 @@ public class ContratServiceTest {
     }
 
     @Test
-    public void addContratTest() {
+    void addContratTest() {
         Contrat newContrat = Contrat.builder()
                 .idContrat(4)  // A new ID
                 .archived(false) // Example values
@@ -114,5 +110,23 @@ public class ContratServiceTest {
         verify(contratRepository).save(newContrat);
     }
 
+
+    @Test
+    public void testGetChiffreAffaireEntreDeuxDates() {
+        // Define your test data
+        Date startDate = new Date(1/10/2023);
+        Date endDate = new Date();
+
+
+        // Mock the behavior of contratRepository.findAll() to return the list of contrats
+        when(contratRepository.findAll()).thenReturn(list);
+
+        // Call the method to be tested
+        float chiffreAffaire = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+
+        // Perform assertions to verify the result
+        // Replace these assertions with your expected values
+        assertEquals(27820, chiffreAffaire);
+    }
 
 }

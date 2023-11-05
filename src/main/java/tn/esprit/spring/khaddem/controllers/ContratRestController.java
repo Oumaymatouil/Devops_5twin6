@@ -2,6 +2,7 @@ package tn.esprit.spring.khaddem.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.services.IContratService;
@@ -55,7 +56,13 @@ public class ContratRestController {
         return contratService.updateContrat(contrat);
     }
 
-
+    // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
+//    @PostMapping("/addAndAffectContratToEtudiant/{nomE}/{prenomE}")
+//    @ResponseBody
+//    public Contrat addAndAffectContratToEtudiant(@RequestBody Contrat contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
+//        Contrat c= contratService.addAndAffectContratToEtudiant(contrat,nomE,prenomE);
+//        return c;
+//    }
 
     //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
     @GetMapping(value = "/getnbContratsValides/{startDate}/{endDate}")
@@ -65,6 +72,15 @@ public class ContratRestController {
         return contratService.nbContratsValides(startDate, endDate);
     }
 
+//    //Only no-arg methods may be annotated with @Scheduled
+//    @Scheduled(cron="0 0 13 * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
+//  //  @Scheduled(cron="45 * * * * *")//(cron="0 0 13 * * ?")(fixedRate =21600)
+//    @PutMapping(value = "/majStatusContrat")
+//    public void majStatusContrat (){
+//        contratService.retrieveAndUpdateStatusContrat();
+//    }
+
+    //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
     @GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
     @ResponseBody
