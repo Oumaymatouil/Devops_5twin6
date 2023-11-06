@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
+import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.services.DetailEquipeServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,9 +26,12 @@ class DetailEquipeServiceTest {
     @Autowired
     private DetailEquipeServiceImpl detailEquipeService;
 
+    @Autowired
+    private EquipeRepository equipeRepository;
+
     @BeforeEach
     public void setUp() {
-        detailEquipeService = new DetailEquipeServiceImpl(detailEquipeRepository);
+        detailEquipeService = new DetailEquipeServiceImpl(detailEquipeRepository, equipeRepository);
     }
 
     @Test
@@ -48,7 +52,7 @@ class DetailEquipeServiceTest {
 
     @Test
     void retrieveDetailEquipeTest() {
-        Integer idDetailEquipe = 1; // Change to the desired ID
+        Integer idDetailEquipe = 1;
         DetailEquipe expectedDetailEquipe = new DetailEquipe();
         Mockito.when(detailEquipeRepository.findById(idDetailEquipe)).thenReturn(Optional.of(expectedDetailEquipe));
         DetailEquipe result = detailEquipeService.retrieveDetailEquipe(idDetailEquipe);

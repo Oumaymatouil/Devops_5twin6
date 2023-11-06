@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/detailsEquipe")
+@RequestMapping("/details-equipe")
 public class DetailEquipeRestController {
 
     IDetailEquipeService detailEquipeService;
@@ -29,9 +29,6 @@ public class DetailEquipeRestController {
     public DetailEquipe retrieveDetailEquipe(@PathVariable("detail-equipe-id") Integer detailEquipeId) {
         return detailEquipeService.retrieveDetailEquipe(detailEquipeId);
     }
-
-
-
 
 
     // http://localhost:8089/Kaddem/equipe/add-equipe
@@ -58,9 +55,9 @@ public class DetailEquipeRestController {
     }
 
     // http://localhost:8089/Kaddem/equipe/detail-retrieve-by-equipe/8
-   /* @GetMapping("/retrieve-detail-by-equipe/{detail-equipe-id}")
+    @GetMapping("/retrieve-detail-by-equipe/{detail-equipe-id}")
     @ResponseBody
     public DetailEquipe retrieveDetailEquipeByEquipeId(@PathVariable("detail-equipe-id") Integer equipeId) {
         return detailEquipeService.retrieveDetailEquipeByEquipeId(equipeId);
-    }*/
+    }
 }

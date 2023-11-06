@@ -13,6 +13,8 @@ public interface IDetailEquipeService {
 
     DetailEquipe retrieveDetailEquipe(Integer idDetailEquipe);
 
-    /* DetailEquipe retrieveDetailEquipeByEquipeId(Integer idEquipe);*/
+    DetailEquipe retrieveDetailEquipeByEquipeId(Integer idEquipe);
+
+    DetailEquipe addEquipeToDetailEquipe(int idEquipe, int idDetail);
 
 }
