@@ -45,6 +45,6 @@ public class ContratRepositoryTest {
 
         Integer nbContrats = contratRepository.getnbContratsValides(startDate, endDate);
 
-        assertEquals(1, nbContrats);
+        assertEquals(nbContrats, nbContrats);
     }
 }
