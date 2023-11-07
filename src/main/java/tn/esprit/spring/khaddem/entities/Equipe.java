@@ -27,6 +27,7 @@ public class Equipe implements Serializable {
     @ManyToMany(mappedBy = "equipes",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Etudiant> etudiants;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "equipe" , cascade = CascadeType.ALL)
+    @JsonIgnore
     private DetailEquipe detailEquipe;
 }

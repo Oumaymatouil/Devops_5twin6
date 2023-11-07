@@ -1,6 +1,7 @@
 package tn.esprit.spring.khaddem.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class DetailEquipe implements Serializable {
     private Integer salle;
     private String thematique;
 
-    // @OneToOne(mappedBy = "detailEquipe")
-    // @JsonIgnore
+    @OneToOne
+    @JsonIgnore
     private Equipe equipe;
 }

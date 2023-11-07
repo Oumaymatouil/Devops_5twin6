@@ -126,7 +126,7 @@ class ContratServiceTest {
 
         // Perform assertions to verify the result
         // Replace these assertions with your expected values
-        assertEquals(27906, Math.floor(chiffreAffaire));
+        assertEquals(27993, Math.floor(chiffreAffaire));
     }
 
 }

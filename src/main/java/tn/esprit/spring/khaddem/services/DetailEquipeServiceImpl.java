@@ -63,6 +63,8 @@ public class DetailEquipeServiceImpl implements IDetailEquipeService {
         }
         DetailEquipe detailEquipe = detailEquipeOptional.get();
         Equipe equipe = equipeOptional.get();
+        equipe.setDetailEquipe(detailEquipe);
+        equipeRepository.save(equipe);
         detailEquipe.setEquipe(equipe);
         detailEquipeRepository.save(detailEquipe);
         return detailEquipe;

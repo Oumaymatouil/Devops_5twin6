@@ -60,4 +60,13 @@ public class DetailEquipeRestController {
     public DetailEquipe retrieveDetailEquipeByEquipeId(@PathVariable("detail-equipe-id") Integer equipeId) {
         return detailEquipeService.retrieveDetailEquipeByEquipeId(equipeId);
     }
+
+    // http://localhost:8089/Kaddem/equipe/detail-retrieve-by-equipe/8
+    @PostMapping("/add-detail-to-equipe/{detail-equipe-id}/{equipe-id}")
+    @ResponseBody
+    public DetailEquipe addDetailToEquipe(@PathVariable("detail-equipe-id") Integer detailEquipeId, @PathVariable("equipe-id") Integer equipeId) {
+        return detailEquipeService.addEquipeToDetailEquipe(equipeId, detailEquipeId);
+    }
+
+
 }
