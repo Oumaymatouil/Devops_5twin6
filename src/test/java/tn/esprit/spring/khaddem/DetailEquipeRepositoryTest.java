@@ -5,19 +5,29 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import tn.esprit.spring.khaddem.config.LoggingAspect;
+import tn.esprit.spring.khaddem.config.PerformanceAspect;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
 class DetailEquipeRepositoryTest {
     @Autowired
     private DetailEquipeRepository detailEquipeRepository;
+
+
+    private PerformanceAspect performanceAspect = new PerformanceAspect();
+    private LoggingAspect loggingAspect = new LoggingAspect();
 
     @Test
     void testSaveDetailEquipe() {
@@ -92,5 +102,4 @@ class DetailEquipeRepositoryTest {
         }
         assertTrue(count >= 2);
     }
-
 }

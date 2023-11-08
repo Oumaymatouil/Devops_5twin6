@@ -1,19 +1,23 @@
 package tn.esprit.spring.khaddem.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.dto.DetailEquipeDTO;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
-import tn.esprit.spring.khaddem.services.IDetailEquipeService;
+import tn.esprit.spring.khaddem.services.*;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Controller
 @RequestMapping("/details-equipe")
 public class DetailEquipeRestController {
 
-    IDetailEquipeService detailEquipeService;
+    @Autowired
+    DetailEquipeServiceImpl detailEquipeService;
 
     // http://localhost:8089/Kaddem/equipe/retrieve-all-detail-equipes
     @GetMapping("/retrieve-all-detail-equipe")
