@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class DetailEquipeServiceTest {
     @Mock
     private DetailEquipeRepository detailEquipeRepository;

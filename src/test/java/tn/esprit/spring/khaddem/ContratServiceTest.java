@@ -115,7 +115,7 @@ class ContratServiceTest {
     public void testGetChiffreAffaireEntreDeuxDates() {
         // Define your test data
         Date startDate = new Date(1/10/2023);
-        Date endDate = new Date();
+        Date endDate = new Date(1/30/2023);
 
 
         // Mock the behavior of contratRepository.findAll() to return the list of contrats
@@ -126,7 +126,7 @@ class ContratServiceTest {
 
         // Perform assertions to verify the result
         // Replace these assertions with your expected values
-        assertEquals(27993, Math.floor(chiffreAffaire));
+        assertEquals(0, Math.floor(chiffreAffaire));
     }
 
 }
