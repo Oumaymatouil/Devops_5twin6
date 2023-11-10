@@ -16,6 +16,8 @@
     <properties>
         <java.version>8</java.version>
         <sonar.token>384ab47baf34a9fb76a8e9fd56e19e703d01400b</sonar.token>
+        <sonar.login>admin</sonar.login>
+        <sonar.password>123</sonar.password>
     </properties>
     <dependencies>
         <dependency>
