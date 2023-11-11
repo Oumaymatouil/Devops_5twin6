@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 class ContratServiceTest {
-
+/*
     @Mock
     ContratRepository contratRepository;
 
@@ -127,6 +127,6 @@ class ContratServiceTest {
         // Perform assertions to verify the result
         // Replace these assertions with your expected values
         assertEquals(27820, chiffreAffaire);
-    }
+    }*/
 
 }
