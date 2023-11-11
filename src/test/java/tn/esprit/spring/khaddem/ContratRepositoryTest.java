@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class ContratRepositoryTest {
+class ContratRepositoryTest {
 
     @Autowired
     private ContratRepository contratRepository;
@@ -22,7 +22,7 @@ public class ContratRepositoryTest {
     // Inject the repository
 
     @Test
-    public void getnbContratsValidesTest() {
+    void getnbContratsValidesTest() {
         // Create and persist Contrat entities in the in-memory database
 
         Date startDate = new Date(); // Set start date
