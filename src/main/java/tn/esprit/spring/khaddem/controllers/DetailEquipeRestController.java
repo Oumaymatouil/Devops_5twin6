@@ -1,6 +1,7 @@
 package tn.esprit.spring.khaddem.controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import tn.esprit.spring.khaddem.services.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @Controller
@@ -23,6 +25,7 @@ public class DetailEquipeRestController {
     @GetMapping("/retrieve-all-detail-equipe")
     @ResponseBody
     public List<DetailEquipe> getDetailEquipes() {
+        log.warn("hello world");
         return detailEquipeService.retrieveAllDetailEquipe();
     }
 
