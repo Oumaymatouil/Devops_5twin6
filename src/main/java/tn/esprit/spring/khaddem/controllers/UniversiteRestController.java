@@ -52,6 +52,12 @@ public class UniversiteRestController {
         return universiteService.updateUniversite(universite);
     }
 
+    @DeleteMapping("/removeUniversite/{idUniversite}")
+    @ResponseBody
+    public void removeUniversite(@PathVariable("idUniversite") Integer idUniversite) {
+        universiteService.removeUniversite(idUniversite);
+    }
+
   //   http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
     @PutMapping("/assignUniversiteToDepartement/{universiteId}/{departementId}")
     @Operation(description = "assigner une université à un département")

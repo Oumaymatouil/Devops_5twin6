@@ -47,6 +47,11 @@ public class UniversiteServiceImpl implements  IUniversiteService{
 
     }
 
+    @Override
+    public void removeUniversite(Integer idEtudiant) {
+        universiteRepository.deleteById(idEtudiant);
+    }
+
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
 
