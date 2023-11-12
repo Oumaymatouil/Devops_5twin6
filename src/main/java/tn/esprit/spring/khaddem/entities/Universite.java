@@ -1,10 +1,7 @@
 package tn.esprit.spring.khaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Universite implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,4 +30,6 @@ public class Universite implements Serializable {
         this.nomUniv=universiteDTO.getNomUniv();
         this.departements=this.getDepartements();
     }
+
+
 }
