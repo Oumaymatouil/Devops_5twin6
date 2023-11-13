@@ -2,8 +2,6 @@ package tn.esprit.spring.khaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import tn.esprit.spring.khaddem.dto.UniversiteDTO;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

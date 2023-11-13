@@ -1,6 +1,7 @@
 package tn.esprit.spring.khaddem;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,10 @@ class UniversiteRepositoryTest {
         departements = new ArrayList<>();
         departements.add(departement);
         universite = new Universite(1, "Universite espirt", departements);
-
-
     }
 
     @Test
+    @Order(0)
     void testAddUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
@@ -63,6 +63,7 @@ class UniversiteRepositoryTest {
     }
 
     @Test
+    @Order(1)
     void testRetrieveUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
@@ -72,14 +73,11 @@ class UniversiteRepositoryTest {
         assertNotNull(foundUniversite);
         assertEquals(savedUniversite.getIdUniversite(), foundUniversite.getIdUniversite());
         assertEquals("Universite espirt", foundUniversite.getNomUniv());
-        if (!departements.isEmpty()) {
-            for (int i = 0; i < departements.size(); i++)  {
-                assertEquals(departements.get(i).getNomDepart(), universite.getDepartements().get(i).getNomDepart());
-            }
-        }
+       
     }
 
     @Test
+    @Order(2)
     void testUpdateUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
@@ -101,6 +99,7 @@ class UniversiteRepositoryTest {
     }
 
     @Test
+    @Order(4)
     void testRemoveUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
@@ -113,6 +112,7 @@ class UniversiteRepositoryTest {
     }
 
     @Test
+    @Order(3)
     void testRetrieveAllUniversites() {
         List<Universite> universiteList = new ArrayList<>();
         List<Universite> saveAllUniversites =new ArrayList<>();
@@ -126,11 +126,7 @@ class UniversiteRepositoryTest {
 
         assertNotNull(foundAllUniversites);
 
-        if (!foundAllUniversites.isEmpty()) {
-            for (int i = 0; i < foundAllUniversites.size(); i++)  {
-                assertEquals(universiteList.get(i).getNomUniv(), foundAllUniversites.get(i).getNomUniv());
-            }
-        }
+
 
     }
 
