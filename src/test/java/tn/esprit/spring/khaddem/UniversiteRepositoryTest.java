@@ -36,14 +36,18 @@ class UniversiteRepositoryTest {
     Universite universite ;
     Universite savedUniversite ;
 
-
-
-    @Test
-    void testSaveUniversite() {
+    @BeforeEach
+    void setUp() {
         departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
         departements = new ArrayList<>();
         departements.add(departement);
         universite = new Universite(1, "Universite espirt", departements);
+
+
+    }
+
+    @Test
+    void testAddUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite);
@@ -59,11 +63,7 @@ class UniversiteRepositoryTest {
     }
 
     @Test
-    void testFindUniversiteById() {
-        departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
-        departements = new ArrayList<>();
-        departements.add(departement);
-        universite = new Universite(1, "Universite espirt", departements);
+    void testRetrieveUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite);
@@ -81,10 +81,6 @@ class UniversiteRepositoryTest {
 
     @Test
     void testUpdateUniversite() {
-        departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
-        departements = new ArrayList<>();
-        departements.add(departement);
-        universite = new Universite(1, "Universite espirt", departements);
         savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite);
@@ -105,11 +101,7 @@ class UniversiteRepositoryTest {
     }
 
     @Test
-    void testDeleteUniversite() {
-        departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
-        departements = new ArrayList<>();
-        departements.add(departement);
-        universite = new Universite(1, "Universite espirt", departements);
+    void testRemoveUniversite() {
         savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite);
