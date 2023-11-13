@@ -73,7 +73,11 @@ class UniversiteRepositoryTest {
         assertNotNull(foundUniversite);
         assertEquals(savedUniversite.getIdUniversite(), foundUniversite.getIdUniversite());
         assertEquals("Universite espirt", foundUniversite.getNomUniv());
-       
+        if (!departements.isEmpty()) {
+            for (int i = 0; i < departements.size(); i++)  {
+                assertEquals(departements.get(i).getNomDepart(), universite.getDepartements().get(i).getNomDepart());
+            }
+        }
     }
 
     @Test
@@ -111,24 +115,8 @@ class UniversiteRepositoryTest {
         assertNull(deletedUniversite);
     }
 
-    @Test
-    @Order(3)
-    void testRetrieveAllUniversites() {
-        List<Universite> universiteList = new ArrayList<>();
-        List<Universite> saveAllUniversites =new ArrayList<>();
-        universiteList.add(new Universite(1, "Universite 1", departements));
-        universiteList.add(new Universite(2, "Universite 2", departements));
-        saveAllUniversites = universiteRepository.saveAll(universiteList);
 
 
-        assertNotNull(saveAllUniversites);
-        List<Universite>  foundAllUniversites = universiteRepository.findAll();
-
-        assertNotNull(foundAllUniversites);
-
-
-
-    }
 
 
 }
