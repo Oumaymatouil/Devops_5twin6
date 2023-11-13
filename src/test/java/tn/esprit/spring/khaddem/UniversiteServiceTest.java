@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.Departement;
@@ -32,10 +33,12 @@ class UniversiteServiceTest {
     @InjectMocks
     private UniversiteServiceImpl universiteService; // Assuming you have a class implementing IUniversiteService
 
-    Departement departement ;
-    List<Departement> departements ;
-    Universite universite ;
-    Universite savedUniversite ;
+    Departement departement;
+    List<Departement> departements;
+    Universite universite;
+    Universite savedUniversite;
+
+
     @BeforeEach
     void setUp() {
         departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
@@ -44,6 +47,7 @@ class UniversiteServiceTest {
         universite = new Universite(1, "Universite espirt", departements);
 
         savedUniversite = universiteRepository.save(universite);
+      //  MockitoAnnotations.initMocks(this);
 
     }
 
@@ -51,11 +55,11 @@ class UniversiteServiceTest {
     void testRetrieveAllUniversites() {
         // Mocking the repository to return a list of Universites
         List<Universite> universites = new ArrayList<>();
-        List<Departement> departement = new ArrayList<>();
-        departement.add(new Departement());
+        List<Departement> departementList = new ArrayList<>();
+        departementList.add(new Departement());
 
-        universites.add(new Universite(1, "Universite 1", departement));
-        universites.add(new Universite(2, "Universite 2", departement));
+        universites.add(new Universite(1, "Universite 1", departementList));
+        universites.add(new Universite(2, "Universite 2", departementList));
         when(universiteRepository.findAll()).thenReturn(universites);
 
         // Calling the service method
@@ -82,9 +86,28 @@ class UniversiteServiceTest {
         // Asserting the result
         assertNotNull(result);
         assertEquals("Universite 1", result.getNomUniv());
-       // assertEquals("Location 1", result.getLocation());
+        // assertEquals("Location 1", result.getLocation());
     }
 
-    // Similar test methods can be added for update, retrieve, and remove operations
+    @Test
+    void testUpdateUniversite() {
+        // Mock the repository's behavior
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        Universite universite = new Universite(1, "Updated Universite", departements);
+
+        // Call the updateUniversite method
+        Universite updatedUniversite = universiteService.updateUniversite(universite);
+        System.out.println("uni1"+universite.getIdUniversite()+universite.getNomUniv());
+        System.out.println("uni2"+updatedUniversite.getIdUniversite()+updatedUniversite.getNomUniv());
+
+        verify(universiteRepository).save(any());
+
+        // Assertions based on your business logic
+        assertNotNull(updatedUniversite);
+        assertEquals("Updated Universite", updatedUniversite.getNomUniv());
+        // Add more assertions as needed
+    }
+
+
 
 }

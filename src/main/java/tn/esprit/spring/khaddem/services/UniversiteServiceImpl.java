@@ -19,6 +19,8 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     UniversiteRepository universiteRepository;
     @Autowired
     DepartementRepository departementRepository;
+
+    String notFound="introuvable universite";
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
@@ -32,25 +34,13 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     }
 
     @Override
-    public Universite updateUniversite(Universite updatedUniversite) {
-        Universite existingUniversite = universiteRepository.findById(updatedUniversite.getIdUniversite()).orElse(null);
-
-        if (existingUniversite != null) {
-            // Update the attributes of the existingUniversite with the values from updatedUniversite
-            existingUniversite.setNomUniv(updatedUniversite.getNomUniv());
-            existingUniversite.setDepartements(updatedUniversite.getDepartements());
-
-            // Save the updated entity
-            universiteRepository.save(existingUniversite);
-
-            return existingUniversite;
-        } else {
-            // Handle the case where the Universite with the given ID is not found
-            // You might want to throw an exception or handle it according to your requirements
-            return null;
+    public Universite updateUniversite(Universite u) {
+        Optional<Universite> universite = universiteRepository.findById(u.getIdUniversite());
+        if (universite.isPresent()) {
+            return u;
         }
+        throw new NotFoundException(notFound);
     }
-
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
@@ -58,7 +48,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent()) {
             return universite.get();
         }
-        throw new NotFoundException("introuvable universite");
+        throw new NotFoundException(notFound);
 
     }
 
@@ -68,7 +58,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent()) {
             universiteRepository.deleteById(idUniversite);
         }
-        throw new NotFoundException("introuvable universite");
+        throw new NotFoundException(notFound);
     }
 
     @Transactional
@@ -79,6 +69,6 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent() && (departement.isPresent()) ) {
             universite.get().getDepartements().add(departement.get());
         }
-        throw new NotFoundException("introuvable universite");
+        throw new NotFoundException(notFound);
     }
 }
