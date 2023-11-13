@@ -21,6 +21,7 @@ import java.util.List;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -30,28 +31,29 @@ class UniversiteRepositoryTest {
     @Autowired
     private UniversiteRepository universiteRepository;
 
-    Departement departement = new Departement();
-    List<Departement> departements = new ArrayList<>();
-    Universite universite =  new Universite();
+    Departement departement ;
+    List<Departement> departements ;
+    Universite universite ;
+    Universite savedUniversite ;
+
     @BeforeEach
     void setUp() {
         departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
         departements = new ArrayList<>();
         departements.add(departement);
-        System.out.println("iddd "+ departement.getIdDepartement());
         universite = Universite.builder()
                 .idUniversite(1)
                 .nomUniv("Universite espirt")
                 .departements(departements)
                 .build();
+        savedUniversite = universiteRepository.save(universite);
+
     }
 
     @Test
     void testSaveUniversite() {
 
-        Universite savedUniversite = universiteRepository.save(universite);
-
-        assertNotNull(savedUniversite.getIdUniversite());
+        assertNotNull(savedUniversite);
         assertEquals("Universite espirt", savedUniversite.getNomUniv());
         assertEquals(departements.size(), savedUniversite.getDepartements().size());
         if (!departements.isEmpty()) {
@@ -66,7 +68,7 @@ class UniversiteRepositoryTest {
     @Test
     void testFindUniversiteById() {
 
-        Universite savedUniversite = universiteRepository.save(universite);
+        assertNotNull(savedUniversite);
         Universite foundUniversite = universiteRepository.findById(savedUniversite.getIdUniversite()).orElse(null);
 
         assertNotNull(foundUniversite);
@@ -82,7 +84,7 @@ class UniversiteRepositoryTest {
     @Test
     void testUpdateUniversite() {
 
-        Universite savedUniversite = universiteRepository.save(universite);
+        assertNotNull(savedUniversite);
 
         Departement departement2 = Departement.builder().idDepartement(2).nomDepart("TWIN6").build();
         List<Departement> departements2 = new ArrayList<>();
@@ -92,7 +94,7 @@ class UniversiteRepositoryTest {
         savedUniversite.setDepartements(departements2);
 
         Universite updatedUniversite = universiteRepository.save(savedUniversite);
-
+        assertNotNull(updatedUniversite);
         assertEquals(savedUniversite.getIdUniversite(), updatedUniversite.getIdUniversite());
         assertEquals("Updated Universite", updatedUniversite.getNomUniv());
         assertEquals(departements2, updatedUniversite.getDepartements());
@@ -102,11 +104,30 @@ class UniversiteRepositoryTest {
     @Test
     void testDeleteUniversite() {
 
-        Universite savedUniversite = universiteRepository.save(universite);
+        assertNotNull(savedUniversite);
 
         universiteRepository.deleteById(savedUniversite.getIdUniversite());
 
         Universite deletedUniversite = universiteRepository.findById(savedUniversite.getIdUniversite()).orElse(null);
         assertNull(deletedUniversite);
     }
+
+    @Test
+    void testRetrieveAllUniversites() {
+        List<Universite> universiteList = new ArrayList<>() ;
+        universiteList.add(universite);
+
+        assertNotNull(savedUniversite);
+        List<Universite>  foundAllUniversites = universiteRepository.findAll();
+
+        assertNotNull(foundAllUniversites);
+        if (!foundAllUniversites.isEmpty()) {
+            for (int i = 0; i < foundAllUniversites.size(); i++)  {
+                assertEquals(universiteList.get(i).getNomUniv(), foundAllUniversites.get(i).getNomUniv());
+            }
+        }
+
+    }
+
+
 }
