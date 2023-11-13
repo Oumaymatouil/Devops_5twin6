@@ -39,7 +39,7 @@ public class UniversiteRestController {
     @Operation(description = "ajouter une université")
     @ResponseBody
     public Universite addUniversite(@RequestBody UniversiteDTO u) {
-        Universite universite = new Universite(u);
+        Universite universite = new Universite(u.getIdUniversite(),u.getNomUniv(),u.getDepartements());
         return universiteService.addUniversite(universite);
     }
 
@@ -48,7 +48,7 @@ public class UniversiteRestController {
     @Operation(description = "modifier une université")
     @ResponseBody
     public Universite updateUniversite(@RequestBody UniversiteDTO u) {
-        Universite universite = new Universite(u);
+        Universite universite = new Universite(u.getIdUniversite(),u.getNomUniv(),u.getDepartements());
         return universiteService.updateUniversite(universite);
     }
 

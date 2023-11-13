@@ -25,11 +25,4 @@ public class Universite implements Serializable {
    private List<Departement>departements;
 
 
-    public Universite(UniversiteDTO universiteDTO){
-        this.idUniversite=universiteDTO.getIdUniversite();
-        this.nomUniv=universiteDTO.getNomUniv();
-        this.departements=this.getDepartements();
-    }
-
-
 }

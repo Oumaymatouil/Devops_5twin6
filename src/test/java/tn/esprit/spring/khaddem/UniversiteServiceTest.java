@@ -65,7 +65,7 @@ class UniversiteServiceTest {
 
         universites.add(new Universite(1, "Universite 1", departementList));
         universites.add(new Universite(2, "Universite 2", departementList));
-        when(universiteRepository.findAll()).thenReturn(universites);
+        Mockito.when(universiteRepository.findAll()).thenReturn(universites);
 
         // Calling the service method
         List<Universite> result = universiteService.retrieveAllUniversites();
@@ -83,7 +83,7 @@ class UniversiteServiceTest {
         Universite universite = new Universite(1, "Universite 1", departement);
 
         // Mocking the repository to return the saved Universite
-        when(universiteRepository.save(Mockito.any(Universite.class))).thenReturn(universite);
+        Mockito.when(universiteRepository.save(Mockito.any(Universite.class))).thenReturn(universite);
 
         // Calling the service method
         Universite result = universiteService.addUniversite(universite);
@@ -97,7 +97,7 @@ class UniversiteServiceTest {
     @Test
     void testUpdateUniversite() {
         // Case where universite.isPresent() is true
-        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
         Universite universite = new Universite(1, "Updated Universite", departements);
         Universite updatedUniversite = universiteService.updateUniversite(universite);
         verify(universiteRepository).save(any());
@@ -106,7 +106,7 @@ class UniversiteServiceTest {
         assertEquals("Updated Universite", updatedUniversite.getNomUniv());
 
         // Case where universite.isPresent() is false
-        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
         Universite nonExistentUniversite = new Universite(2, "Non-existent Universite", departements);
 
         try {
@@ -122,7 +122,7 @@ class UniversiteServiceTest {
     @Test
     void testRetrieveUniversite() {
         // Case where universite.isPresent() is true
-        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
         Integer existingUniversiteId = 1;
 
         Universite retrievedUniversite = universiteService.retrieveUniversite(existingUniversiteId);
@@ -132,7 +132,7 @@ class UniversiteServiceTest {
         assertEquals(universite, retrievedUniversite);
 
         // Case where universite.isPresent() is false
-        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
         Integer nonExistentUniversiteId = 2;
 
         try {
@@ -142,12 +142,14 @@ class UniversiteServiceTest {
             // Expected exception
             assertEquals(notFound, e.getMessage());
         }
+
+
     }
     @Test
     void testRemoveUniversite() {
         // Case where universite.isPresent() is true
         Integer existingUniversiteId = 1;
-        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
 
         universiteService.removeUniversite(existingUniversiteId);
 
@@ -156,7 +158,7 @@ class UniversiteServiceTest {
 
         // Case where universite.isPresent() is false
         Integer nonExistentUniversiteId = 2;
-        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
 
         try {
             universiteService.removeUniversite(nonExistentUniversiteId);
@@ -172,8 +174,8 @@ class UniversiteServiceTest {
         Integer existingUniversiteId = 1;
         Integer existingDepartementId = 1;
 
-        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
-        when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
+        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+        Mockito.when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
 
         universiteService.assignUniversiteToDepartement(existingUniversiteId, existingDepartementId);
 
@@ -188,8 +190,8 @@ class UniversiteServiceTest {
         Integer nonExistentDepartementId = 2;
 
         // Test case where universite is not present
-        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
-        when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
+        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+        Mockito.when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
 
         try {
             universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, existingDepartementId);
@@ -200,8 +202,8 @@ class UniversiteServiceTest {
         }
 
         // Test case where departement is not present
-        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
-        when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
+        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+        Mockito.when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
 
         try {
             universiteService.assignUniversiteToDepartement(existingUniversiteId, nonExistentDepartementId);
@@ -212,8 +214,8 @@ class UniversiteServiceTest {
         }
 
         // Case where both universite and departement are not present
-        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
-        when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
+        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+        Mockito.when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
 
         try {
             universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, nonExistentDepartementId);
