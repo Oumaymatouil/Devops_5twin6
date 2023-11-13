@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Universite;
@@ -19,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +37,8 @@ class UniversiteServiceTest {
     List<Departement> departements;
     Universite universite;
     Universite savedUniversite;
+    String notFound="introuvable universite";
+
 
 
     @BeforeEach
@@ -91,22 +93,28 @@ class UniversiteServiceTest {
 
     @Test
     void testUpdateUniversite() {
-        // Mock the repository's behavior
+        // Case where universite.isPresent() is true
         when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
         Universite universite = new Universite(1, "Updated Universite", departements);
-
-        // Call the updateUniversite method
         Universite updatedUniversite = universiteService.updateUniversite(universite);
-        System.out.println("uni1"+universite.getIdUniversite()+universite.getNomUniv());
-        System.out.println("uni2"+updatedUniversite.getIdUniversite()+updatedUniversite.getNomUniv());
-
         verify(universiteRepository).save(any());
 
-        // Assertions based on your business logic
         assertNotNull(updatedUniversite);
         assertEquals("Updated Universite", updatedUniversite.getNomUniv());
-        // Add more assertions as needed
+
+        // Case where universite.isPresent() is false
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Universite nonExistentUniversite = new Universite(2, "Non-existent Universite", departements);
+
+        try {
+            universiteService.updateUniversite(nonExistentUniversite);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
     }
+
 
 
 
