@@ -8,8 +8,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.Contrat;
+import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Specialite;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
+import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.khaddem.services.ContratServiceImpl;
 
 import java.util.*;
@@ -23,6 +25,9 @@ class ContratServiceTest {
 
     @Mock
     ContratRepository contratRepository;
+
+    @Mock
+    private EtudiantRepository etudiantRepository;
 
     @InjectMocks
     ContratServiceImpl contratService;
@@ -112,7 +117,7 @@ class ContratServiceTest {
 
 
     @Test
-    void testGetChiffreAffaireEntreDeuxDates() {
+    void GetChiffreAffaireEntreDeuxDatesTest() {
         // Define your test data
         Date startDate = new Date(2023, 9, 1);
         Date endDate = new Date(2023, 10, 1);
@@ -129,4 +134,60 @@ class ContratServiceTest {
         assertEquals(2686.66650390625, chiffreAffaire);
     }
 
+
+    @Test
+    void testAddAndAffectContratToEtudiant_MaximumContractsReached() {
+        // Setup - create a student with 6 active contracts
+        Etudiant etudiant = new Etudiant(); // You might need to create the Etudiant object accordingly
+        when(etudiantRepository.findByNomEAndPrenomE(anyString(), anyString())).thenReturn(etudiant);
+        etudiant.setContrats(Arrays.asList(new Contrat(), new Contrat(), new Contrat(), new Contrat(), new Contrat(), new Contrat()));
+
+        Contrat contrat = new Contrat(); // Create a Contrat object as needed for the test
+
+        // Execution
+        Contrat result = contratService.addAndAffectContratToEtudiant(contrat, "John", "Doe");
+
+        // Assertion
+        // Ensure that the method returns the same contract passed due to maximum contracts reached
+        assertEquals(contrat, result);
+        // You might want to verify that no save operation is invoked on the repository in this scenario.
+        verify(contratRepository, never()).save(any());
+    }
+
+    @Test
+    void testAddAndAffectContratToEtudiant_LessThanMaximumContracts() {
+        // Setup - create a student with 3 active contracts
+        Etudiant etudiant = new Etudiant(); // You might need to create the Etudiant object accordingly
+        when(etudiantRepository.findByNomEAndPrenomE(anyString(), anyString())).thenReturn(etudiant);
+        etudiant.setContrats(Arrays.asList(new Contrat(), new Contrat(), new Contrat()));
+
+        Contrat contrat = new Contrat(); // Create a Contrat object as needed for the test
+
+        // Execution
+        Contrat result = contratService.addAndAffectContratToEtudiant(contrat, "Jane", "Smith");
+
+        // Assertion
+        // Ensure that the method saves the contract and associates it with the student
+        assertEquals(etudiant, contrat.getEtudiant());
+        verify(contratRepository).save(contrat);
+    }
+
+    @Test
+    void retrieveAndUpdateStatusContratTest() {
+        // Setup - Create a contract where the difference in days is 0
+        Date dateNow = new Date();
+
+        Contrat contrat = new Contrat(); // Create a Contrat object and set the required fields
+        contrat.setDateFinContrat(dateNow); // Set the end date to today
+        contrat.setArchived(false); // Make sure it's not archived
+
+        List<Contrat> contrats = Collections.singletonList(contrat);
+
+        when(contratRepository.findAll()).thenReturn(contrats);
+
+        // Execution
+        contratService.retrieveAndUpdateStatusContrat();
+
+        assertTrue(contrat.getArchived());
+    }
 }
