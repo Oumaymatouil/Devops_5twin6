@@ -52,5 +52,21 @@ class ContratRepositoryTest {
         assertEquals(1, nbContrats);
     }
 
-   
+    @Test
+    void findByEtudiantIdEtudiantTest(){
+        Etudiant etudiant = new Etudiant();
+        etudiantRepository.save(etudiant);
+
+        Contrat contrat1 = new Contrat();
+        contrat1.setEtudiant(etudiant);
+        contratRepository.save(contrat1);
+
+        Contrat contrat2 = new Contrat();
+        contrat2.setEtudiant(etudiant);
+        contratRepository.save(contrat2);
+
+        List<Contrat> contratsForEtudiant = contratRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant());
+
+        assertEquals(2, contratsForEtudiant.size());
+    }
 }
