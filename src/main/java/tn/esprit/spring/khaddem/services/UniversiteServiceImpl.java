@@ -33,8 +33,13 @@ public class UniversiteServiceImpl implements  IUniversiteService{
 
     @Override
     public Universite updateUniversite(Universite u) {
-        universiteRepository.save(u);
-        return u;
+        Optional<Universite> universite = universiteRepository.findById(u.getIdUniversite());
+        if (universite.isPresent()) {
+            universiteRepository.save(u);
+            return u;
+
+        }
+        throw new NotFoundException("introuvable universite");
     }
 
     @Override
@@ -48,8 +53,12 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     }
 
     @Override
-    public void removeUniversite(Integer idEtudiant) {
-        universiteRepository.deleteById(idEtudiant);
+    public void removeUniversite(Integer idUniversite) {
+        Optional<Universite> universite = universiteRepository.findById(idUniversite);
+        if (universite.isPresent()) {
+            universiteRepository.deleteById(idUniversite);
+        }
+        throw new NotFoundException("introuvable universite");
     }
 
     @Transactional
