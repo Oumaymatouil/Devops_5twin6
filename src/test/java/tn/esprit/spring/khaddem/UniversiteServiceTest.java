@@ -187,6 +187,31 @@ class UniversiteServiceTest {
         Integer nonExistentUniversiteId = 2;
         Integer nonExistentDepartementId = 2;
 
+        // Test case where universite is not present
+        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+        when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
+
+        try {
+            universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, existingDepartementId);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
+
+        // Test case where departement is not present
+        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+        when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
+
+        try {
+            universiteService.assignUniversiteToDepartement(existingUniversiteId, nonExistentDepartementId);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
+
+        // Case where both universite and departement are not present
         when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
         when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
 
@@ -198,6 +223,7 @@ class UniversiteServiceTest {
             assertEquals(notFound, e.getMessage());
         }
     }
+
 
 
 }
