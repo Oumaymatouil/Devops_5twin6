@@ -58,7 +58,8 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent()) {
             universiteRepository.deleteById(idUniversite);
         }
-        throw new NotFoundException(notFound);
+        else{
+        throw new NotFoundException(notFound);}
     }
 
     @Transactional
@@ -69,6 +70,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent() && (departement.isPresent()) ) {
             universite.get().getDepartements().add(departement.get());
         }
-        throw new NotFoundException(notFound);
+        else {
+        throw new NotFoundException(notFound);}
     }
 }

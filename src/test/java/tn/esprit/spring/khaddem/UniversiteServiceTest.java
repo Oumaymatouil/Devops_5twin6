@@ -13,6 +13,7 @@ import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Universite;
+import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.UniversiteServiceImpl;
 
@@ -29,6 +30,8 @@ class UniversiteServiceTest {
 
     @Mock
     private UniversiteRepository universiteRepository;
+    @Mock
+    private DepartementRepository departementRepository;
 
     @InjectMocks
     private UniversiteServiceImpl universiteService; // Assuming you have a class implementing IUniversiteService
@@ -116,6 +119,85 @@ class UniversiteServiceTest {
     }
 
 
+    @Test
+    void testRetrieveUniversite() {
+        // Case where universite.isPresent() is true
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        Integer existingUniversiteId = 1;
+
+        Universite retrievedUniversite = universiteService.retrieveUniversite(existingUniversiteId);
+
+        verify(universiteRepository).findById(existingUniversiteId);
+        assertNotNull(retrievedUniversite);
+        assertEquals(universite, retrievedUniversite);
+
+        // Case where universite.isPresent() is false
+        when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Integer nonExistentUniversiteId = 2;
+
+        try {
+            universiteService.retrieveUniversite(nonExistentUniversiteId);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
+    }
+    @Test
+    void testRemoveUniversite() {
+        // Case where universite.isPresent() is true
+        Integer existingUniversiteId = 1;
+        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+
+        universiteService.removeUniversite(existingUniversiteId);
+
+        verify(universiteRepository).findById(existingUniversiteId);
+        verify(universiteRepository).deleteById(existingUniversiteId);
+
+        // Case where universite.isPresent() is false
+        Integer nonExistentUniversiteId = 2;
+        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+
+        try {
+            universiteService.removeUniversite(nonExistentUniversiteId);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
+    }
+    @Test
+    void testAssignUniversiteToDepartement() {
+        // Case where both universite and departement are present
+        Integer existingUniversiteId = 1;
+        Integer existingDepartementId = 1;
+
+        when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+        when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
+
+        universiteService.assignUniversiteToDepartement(existingUniversiteId, existingDepartementId);
+
+        verify(universiteRepository).findById(existingUniversiteId);
+        verify(departementRepository).findById(existingDepartementId);
+
+        // Add your assertions for the actual assignment, for example:
+        assertTrue(universite.getDepartements().contains(departement));
+
+        // Case where either universite or departement is not present
+        Integer nonExistentUniversiteId = 2;
+        Integer nonExistentDepartementId = 2;
+
+        when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
+        when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
+
+        try {
+            universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, nonExistentDepartementId);
+            fail("Expected NotFoundException was not thrown");
+        } catch (NotFoundException e) {
+            // Expected exception
+            assertEquals(notFound, e.getMessage());
+        }
+    }
 
 
 }
