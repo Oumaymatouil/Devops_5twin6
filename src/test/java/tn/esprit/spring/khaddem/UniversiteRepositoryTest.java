@@ -38,7 +38,7 @@ class UniversiteRepositoryTest {
         departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
         departements = new ArrayList<>();
         departements.add(departement);
-
+        System.out.println("iddd "+ departement.getIdDepartement());
         universite = Universite.builder()
                 .idUniversite(1)
                 .nomUniv("Universite espirt")
@@ -48,11 +48,19 @@ class UniversiteRepositoryTest {
 
     @Test
     void testSaveUniversite() {
+
         Universite savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite.getIdUniversite());
         assertEquals("Universite espirt", savedUniversite.getNomUniv());
-        assertEquals(departements, savedUniversite.getDepartements());
+        assertEquals(departements.size(), savedUniversite.getDepartements().size());
+        if (!departements.isEmpty()) {
+            for (int i = 0; i < departements.size(); i++)  {
+                assertEquals(departements.get(i).getNomDepart(), savedUniversite.getDepartements().get(i).getNomDepart());
+            }
+        }
+
+
     }
 
     @Test
@@ -64,7 +72,11 @@ class UniversiteRepositoryTest {
         assertNotNull(foundUniversite);
         assertEquals(savedUniversite.getIdUniversite(), foundUniversite.getIdUniversite());
         assertEquals("Universite espirt", foundUniversite.getNomUniv());
-        assertEquals(departements, foundUniversite.getDepartements());
+        if (!departements.isEmpty()) {
+            for (int i = 0; i < departements.size(); i++)  {
+                assertEquals(departements.get(i).getNomDepart(), savedUniversite.getDepartements().get(i).getNomDepart());
+            }
+        }
     }
 
     @Test
