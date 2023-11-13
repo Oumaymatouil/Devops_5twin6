@@ -32,15 +32,25 @@ public class UniversiteServiceImpl implements  IUniversiteService{
     }
 
     @Override
-    public Universite updateUniversite(Universite u) {
-        Optional<Universite> universite = universiteRepository.findById(u.getIdUniversite());
-        if (universite.isPresent()) {
-            universiteRepository.save(u);
-            return u;
+    public Universite updateUniversite(Universite updatedUniversite) {
+        Universite existingUniversite = universiteRepository.findById(updatedUniversite.getIdUniversite()).orElse(null);
 
+        if (existingUniversite != null) {
+            // Update the attributes of the existingUniversite with the values from updatedUniversite
+            existingUniversite.setNomUniv(updatedUniversite.getNomUniv());
+            existingUniversite.setDepartements(updatedUniversite.getDepartements());
+
+            // Save the updated entity
+            universiteRepository.save(existingUniversite);
+
+            return existingUniversite;
+        } else {
+            // Handle the case where the Universite with the given ID is not found
+            // You might want to throw an exception or handle it according to your requirements
+            return null;
         }
-        throw new NotFoundException("introuvable universite");
     }
+
 
     @Override
     public Universite retrieveUniversite(Integer idUniversite) {
