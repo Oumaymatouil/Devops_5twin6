@@ -52,7 +52,7 @@ class UniversiteRepositoryTest {
         savedUniversite = universiteRepository.save(universite);
 
         assertNotNull(savedUniversite);
-        assertEquals(universiteRepository.findByNomUniv("Universite espirt"), savedUniversite.getNomUniv());
+        assertEquals(universiteRepository.findByNomUniv("Universite espirt"), savedUniversite);
 
 
     }
