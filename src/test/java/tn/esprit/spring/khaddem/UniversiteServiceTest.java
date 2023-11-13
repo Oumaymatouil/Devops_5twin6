@@ -1,5 +1,6 @@
 package tn.esprit.spring.khaddem;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,21 @@ class UniversiteServiceTest {
 
     @InjectMocks
     private UniversiteServiceImpl universiteService; // Assuming you have a class implementing IUniversiteService
+
+    Departement departement ;
+    List<Departement> departements ;
+    Universite universite ;
+    Universite savedUniversite ;
+    @BeforeEach
+    void setUp() {
+        departement = Departement.builder().idDepartement(1).nomDepart("TWIN").build();
+        departements = new ArrayList<>();
+        departements.add(departement);
+        universite = new Universite(1, "Universite espirt", departements);
+
+        savedUniversite = universiteRepository.save(universite);
+
+    }
 
     @Test
     void testRetrieveAllUniversites() {
