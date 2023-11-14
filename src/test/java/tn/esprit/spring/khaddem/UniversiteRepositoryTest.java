@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
+import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ class UniversiteRepositoryTest {
 
     @Autowired
     private UniversiteRepository universiteRepository;
+    @Autowired
+    private DepartementRepository departementRepository;
 
     Departement departement ;
     List<Departement> departements ;
@@ -53,8 +56,21 @@ class UniversiteRepositoryTest {
 
         assertNotNull(savedUniversite);
         assertEquals(universiteRepository.findByNomUniv("Universite espirt"), savedUniversite);
+    }
+    @Test
+    @Order(6)
+    void testFindByDepartements() {
+        Departement departementF = Departement.builder().idDepartement(4).nomDepart("TWIN2").build();
+        ArrayList<Departement> departementsF = new ArrayList<>();
+        departementsF.add(departementF);
+        Universite universiteF = new Universite(4, "Universite espirt2", departementsF);
+        Universite savedUniversiteF = universiteRepository.save(universiteF);
 
+        assertNotNull(savedUniversiteF);
+        assertNotNull(universiteRepository.findByDepartements(departementF).getNomUniv());
 
+        assertEquals(universiteRepository.findByDepartements(departementF).getNomUniv(), savedUniversiteF.getNomUniv());
+        System.out.println("tesssst "+universiteRepository.findByDepartements(departementF).getNomUniv());
     }
 
     @Test
