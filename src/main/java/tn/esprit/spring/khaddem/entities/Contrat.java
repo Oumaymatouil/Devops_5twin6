@@ -2,6 +2,7 @@ package tn.esprit.spring.khaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
+import tn.esprit.spring.khaddem.controllers.ContratDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -107,5 +108,15 @@ public class Contrat implements Serializable {
         this.archived = archived;
         this.montantContrat = montantContrat;
         this.etudiant = etudiant;
+    }
+
+    public Contrat(ContratDTO c) {
+        this.idContrat = c.getIdContrat();
+        this.dateDebutContrat = c.getDateDebutContrat();
+        this.dateFinContrat = c.getDateFinContrat();
+        this.specialite = c.getSpecialite();
+        this.archived = c.getArchived();
+        this.montantContrat = c.getMontantContrat();
+        this.etudiant = c.getEtudiant();
     }
 }

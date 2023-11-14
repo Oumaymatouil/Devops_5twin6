@@ -16,52 +16,37 @@ import java.util.List;
 public class ContratRestController {
     IContratService contratService;
 
-    // http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
     @GetMapping("/retrieve-all-contrats")
     @ResponseBody
     public List<Contrat> getContrats() {
         return contratService.retrieveAllContrats();
     }
 
-    // http://localhost:8089/Kaddem/contrat/retrieve-contrat/8
     @GetMapping("/retrieve-contrat/{contrat-id}")
     @ResponseBody
     public Contrat retrieveContrat(@PathVariable("contrat-id") Integer contratId) {
         return contratService.retrieveContrat(contratId);
     }
 
-    // http://localhost:8089/Kaddem/contrat/add-contrat
     @PostMapping("/add-contrat")
     @ResponseBody
     public Contrat addContrat(@RequestBody ContratDTO c) {
-        Contrat contrat = new Contrat();
-        contrat.setMontantContrat(c.getMontantContrat());
-        contrat.setDateDebutContrat(c.getDateDebutContrat());
-        contrat.setDateFinContrat(c.getDateFinContrat());
-        contrat.setArchived(c.getArchived());
-        contrat.setSpecialite(c.getSpecialite());
+        Contrat contrat = new Contrat(c);
         return contratService.addContrat(contrat);
     }
 
-    // http://localhost:8089/Kaddem/contrat/update-contrat
     @PutMapping("/update-contrat")
     @ResponseBody
     public Contrat updateEtudiant(@RequestBody ContratDTO c) {
-        Contrat contrat = new Contrat();
-        contrat.setMontantContrat(c.getMontantContrat());
-        contrat.setDateDebutContrat(c.getDateDebutContrat());
-        contrat.setDateFinContrat(c.getDateFinContrat());
-        contrat.setArchived(c.getArchived());
-        contrat.setSpecialite(c.getSpecialite());
+        Contrat contrat = new Contrat(c);
         return contratService.updateContrat(contrat);
     }
 
-    // http://localhost:8089/Kaddem/contrat/addAndAffectContratToEtudiant/salah/ahmed
     @PostMapping("/addAndAffectContratToEtudiant/{nomE}/{prenomE}")
     @ResponseBody
-    public Contrat addAndAffectContratToEtudiant(@RequestBody Contrat contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
-        Contrat c= contratService.addAndAffectContratToEtudiant(contrat,nomE,prenomE);
-        return c;
+    public Contrat addAndAffectContratToEtudiant(@RequestBody ContratDTO contrat,@PathVariable("nomE") String nomE,@PathVariable("prenomE") String prenomE) {
+        Contrat con = new Contrat(contrat);
+        return contratService.addAndAffectContratToEtudiant(con,nomE,prenomE);
     }
 
     //The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
@@ -79,8 +64,6 @@ public class ContratRestController {
     public void majStatusContrat (){
         contratService.retrieveAndUpdateStatusContrat();
     }
-
-    //public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
     @GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
     @ResponseBody
