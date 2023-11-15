@@ -126,7 +126,7 @@ class ContratServiceTest {
 
         // Perform assertions to verify the result
         // Replace these assertions with your expected values
-        assertEquals(27820, chiffreAffaire);
+        assertEquals(27820.0, chiffreAffaire);
     }
 
 }
