@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  db-mysql:
+    image: "mysql:5.6"
+    container_name: db-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+    ports:
+      - "3306:3306"
+
+  sonarqube:
+    image: "sonarqube:8.9.7-community"
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+
+  nexus:
+    image: "sonatype/nexus3"
+    container_name: nexus
+    ports:
+      - "8081:8081"
+
+
+
