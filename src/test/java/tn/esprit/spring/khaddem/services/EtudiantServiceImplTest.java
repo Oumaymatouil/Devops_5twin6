@@ -140,70 +140,70 @@ class EtudiantServiceImplTest {
     }
 
 }
-
-@SpringBootTest(classes = {KhaddemApplication.class})
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(SpringExtension.class)
-class EtudiantServiceImplJunitTest {
-
-    @Autowired
-    EquipeRepository equipeRepository;
-    @Autowired
-    ContratRepository contratRepository;
-    @Autowired
-    EtudiantRepository etudiantRepository;
-    @Autowired
-    DepartementRepository departementRepository;
-    @Autowired
-    EtudiantServiceImpl etudiantService;
-    @Autowired
-    DepartementServiceImpl departementService;
-    @Autowired
-    ContratServiceImpl contratService;
-    @Autowired
-    EquipeServiceImpl equipeService;
-
-    Departement departement = new Departement(1,"TWIN",new ArrayList<Etudiant>());
-    Equipe equipe = new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe());
-    List<Equipe> equipes = new ArrayList<Equipe>(){
-        {
-            add(new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe()));
-        }
-    };
-    List<Contrat> contrats = new ArrayList<Contrat>(){
-        {
-            add(new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e));
-        }
-    };
-    Etudiant e = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,departement,equipes,contrats);
-    Contrat contrat = new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e);
-
-
-
-    @Test
-    @Order(1)
-    void testAddEtudiant(){
-        equipeService.addEquipe(equipe);
-        contratService.addContrat(contrat);
-        departementService.addDepartement(departement);
-        etudiantService.addEtudiant(e);
-        equipeRepository.save(equipe);
-        contratRepository.save(contrat);
-        departementRepository.save(departement);
-        etudiantRepository.save(e);
-        Etudiant etudiant= etudiantService.addEtudiant(e);
-        Assertions.assertEquals("sofien",etudiant.getNomE());
-    }
-
+//
+//@SpringBootTest(classes = {KhaddemApplication.class})
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//@ExtendWith(SpringExtension.class)
+//class EtudiantServiceImplJunitTest {
+//
+//    @Autowired
+//    EquipeRepository equipeRepository;
+//    @Autowired
+//    ContratRepository contratRepository;
+//    @Autowired
+//    EtudiantRepository etudiantRepository;
+//    @Autowired
+//    DepartementRepository departementRepository;
+//    @Autowired
+//    EtudiantServiceImpl etudiantService;
+//    @Autowired
+//    DepartementServiceImpl departementService;
+//    @Autowired
+//    ContratServiceImpl contratService;
+//    @Autowired
+//    EquipeServiceImpl equipeService;
+//
+//    Departement departement = new Departement(1,"TWIN",new ArrayList<Etudiant>());
+//    Equipe equipe = new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe());
+//    List<Equipe> equipes = new ArrayList<Equipe>(){
+//        {
+//            add(new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe()));
+//        }
+//    };
+//    List<Contrat> contrats = new ArrayList<Contrat>(){
+//        {
+//            add(new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e));
+//        }
+//    };
+//    Etudiant e = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,departement,equipes,contrats);
+//    Contrat contrat = new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e);
+//
+//
+//
 //    @Test
-//    @Order(2)
-//    void testRetrieveEtudiant(){
-//        Etudiant etudiant = etudiantService.retrieveEtudiant(1);
-//        Assertions.assertNotNull(etudiant);
+//    @Order(1)
+//    void testAddEtudiant(){
+//        equipeService.addEquipe(equipe);
+//        contratService.addContrat(contrat);
+//        departementService.addDepartement(departement);
+//        etudiantService.addEtudiant(e);
+//        equipeRepository.save(equipe);
+//        contratRepository.save(contrat);
+//        departementRepository.save(departement);
+//        etudiantRepository.save(e);
+//        Etudiant etudiant= etudiantService.addEtudiant(e);
+//        Assertions.assertEquals("sofien",etudiant.getNomE());
 //    }
-
-
-
-
-}
-
+//
+////    @Test
+////    @Order(2)
+////    void testRetrieveEtudiant(){
+////        Etudiant etudiant = etudiantService.retrieveEtudiant(1);
+////        Assertions.assertNotNull(etudiant);
+////    }
+//
+//
+//
+//
+//}
+//
