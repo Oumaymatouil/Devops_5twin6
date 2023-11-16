@@ -3,6 +3,7 @@ package tn.esprit.spring.khaddem.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Specialite;
@@ -38,13 +39,13 @@ public class ContratServiceImpl implements  IContratService{
     }
 
     @Override
-    public Contrat retrieveContrat(Integer idContrat) {
+    public Contrat retrieveContrat(Integer idContrat){
         log.info("debut methode retrieveContrat");
         Optional<Contrat> optionalContrat = contratRepository.findById(idContrat);
         if (optionalContrat.isPresent()) {
             return optionalContrat.get();
         }
-        throw new RuntimeException("Contrat not found for id: " + idContrat);
+        throw new NotFoundException("Contrat not found for id: " + idContrat);
     }
 
     @Override
@@ -105,12 +106,11 @@ public class ContratServiceImpl implements  IContratService{
 
             Date dateSysteme = new Date();
 
-            if (contrat.getArchived()==null || contrat.getArchived()==false) {
+            if (contrat.getArchived()==null || !contrat.getArchived()) {
                 long differenceInTime = contrat.getDateFinContrat().getTime()-dateSysteme.getTime();
                 long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
                 // il est préférable d'utiliser des méthodes prédéfinis de comparaison
                log.info("difference in days : "+differenceInDays);
-             //     if (differenceInDays>=0 && differenceInDays<=15){  // entre 0 et  15 jours exactement
                     if (differenceInDays==15){  // pour 15 jours exactement
                     log.info(" Contrat Commencant le : " + contrat.getDateDebutContrat()+"pour l'etudiant "+contrat.getEtudiant().getNomE()+
                             " "+contrat.getEtudiant().getPrenomE()+"  va bientot s achever le "

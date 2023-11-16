@@ -6,25 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.spring.khaddem.entities.Contrat;
+import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
+import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class ContratRepositoryTest {
+class ContratRepositoryTest {
 
     @Autowired
     private ContratRepository contratRepository;
 
-    // Inject the repository
+    @Autowired
+    private EtudiantRepository etudiantRepository;
+
 
     @Test
-    public void getnbContratsValidesTest() {
+    void getnbContratsValidesTest() {
         // Create and persist Contrat entities in the in-memory database
-
         Date startDate = new Date(); // Set start date
         Date endDate = new Date(); // Set end date
 
@@ -46,5 +50,23 @@ public class ContratRepositoryTest {
         Integer nbContrats = contratRepository.getnbContratsValides(startDate, endDate);
 
         assertEquals(1, nbContrats);
+    }
+
+    @Test
+    void findByEtudiantIdEtudiantTest(){
+        Etudiant etudiant = new Etudiant();
+        etudiantRepository.save(etudiant);
+
+        Contrat contrat1 = new Contrat();
+        contrat1.setEtudiant(etudiant);
+        contratRepository.save(contrat1);
+
+        Contrat contrat2 = new Contrat();
+        contrat2.setEtudiant(etudiant);
+        contratRepository.save(contrat2);
+
+        List<Contrat> contratsForEtudiant = contratRepository.findByEtudiantIdEtudiant(etudiant.getIdEtudiant());
+
+        assertEquals(2, contratsForEtudiant.size());
     }
 }
