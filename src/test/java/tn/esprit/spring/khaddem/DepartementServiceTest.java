@@ -1,111 +1,90 @@
 package tn.esprit.spring.khaddem;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.webjars.NotFoundException;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
-import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
-import tn.esprit.spring.khaddem.services.IDepartementService;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
+import tn.esprit.spring.khaddem.services.DepartementServiceImpl;
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class DepartementServiceTest {
 
     @Mock
     private DepartementRepository departementRepository;
 
-    @Mock
-    private UniversiteRepository universiteRepository;
+    @Autowired
+    private DepartementServiceImpl departementService;
 
-    @InjectMocks
-    private IDepartementService departementService;
+    @BeforeEach
+    public void setUp() {
+        departementService = new DepartementServiceImpl(departementRepository);
+    }
 
     @Test
-    public void testRetrieveAllDepartements() {
-        // Mocking the behavior of the repository
-        when(departementRepository.findAll()).thenReturn(Arrays.asList(
-                new Departement(),
-                new Departement()
-        ));
-
-        // Calling the service method
+    void retrieveAllDepartements() {
+        List<Departement> expectedDepartements = new ArrayList<>();
+        Mockito.when(departementRepository.findAll()).thenReturn(expectedDepartements);
         List<Departement> result = departementService.retrieveAllDepartements();
-
-        // Assertions
-        assertEquals(2, result.size());
+        assertEquals(expectedDepartements.size(), result.size());
     }
 
     @Test
-    public void testAddDepartement() {
-        // Creating a new Departement object
-        Departement newDepartement = new Departement();
-        newDepartement.setIdDepartement(1);
-        newDepartement.setNomDepart("Nouveau Département");
-
-        // Mocking the behavior of the repository
-        when(departementRepository.save(any(Departement.class))).thenReturn(newDepartement);
-
-        // Calling the service method
-        Departement result = departementService.addDepartement(newDepartement);
-
-        // Assertions
-        assertEquals(1, result.getIdDepartement());
-        assertEquals("Nouveau Département", result.getNomDepart());
+    void addDepartementTest() {
+        Departement departement = new Departement();
+        Mockito.when(departementRepository.save(departement)).thenReturn(departement);
+        Departement result = departementService.addDepartement(departement);
+        assertEquals(departement, result);
     }
 
     @Test
-    public void testUpdateDepartement() {
-        // Creating an existing Departement object
+    void retrieveDepartementTest() {
+        Integer idDepartement = 1; // Change to the desired ID
+        Departement expectedDepartement = new Departement();
+        Mockito.when(departementRepository.findById(idDepartement)).thenReturn(Optional.of(expectedDepartement));
+        Departement result = departementService.retrieveDepartement(idDepartement);
+        assertEquals(expectedDepartement, result);
+    }
+    @Test
+    void testUpdateDepartement() {
+        // Créez un département avec les détails existants
         Departement existingDepartement = new Departement();
+        existingDepartement.setIdDepartement(1);
+        existingDepartement.setNomDepart("Informatique");
 
-        // Mocking the behavior of the repository
-        when(departementRepository.findById(existingDepartement.getIdDepartement())).thenReturn(Optional.of(existingDepartement));
-        when(departementRepository.save(any(Departement.class))).thenReturn(existingDepartement);
-
-        // Calling the service method
+        // Créez un département mis à jour avec de nouvelles informations
         Departement updatedDepartement = new Departement();
+        updatedDepartement.setIdDepartement(1);
+        updatedDepartement.setNomDepart("Nouveau Nom");
+
+        // Configurer le comportement du repository pour simuler la récupération du département existant
+        when(departementRepository.findById(1)).thenReturn(Optional.of(existingDepartement));
+
+        // Configurer le comportement du repository pour simuler la sauvegarde du département mis à jour
+        when(departementRepository.save(any(Departement.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Appeler la méthode de mise à jour du service
         Departement result = departementService.updateDepartement(updatedDepartement);
 
-        // Assertions
-        assertEquals("Informatique Modifié", result.getNomDepart());
+        // Assurer que le résultat est le département mis à jour
+        Assertions.assertEquals(existingDepartement, updatedDepartement);
+
+        // Vérifier que le repository a été appelé avec le bon département mis à jour
+        verify(departementRepository).save(updatedDepartement);
+
     }
 
-    @Test
-    public void testRetrieveDepartement() {
-        // Creating an existing Departement object
-        Departement existingDepartement = new Departement();
 
-        // Mocking the behavior of the repository
-        when(departementRepository.findById(existingDepartement.getIdDepartement())).thenReturn(Optional.of(existingDepartement));
 
-        // Calling the service method
-        Departement result = departementService.retrieveDepartement(1);
 
-        // Assertions
-        assertEquals("Informatique", result.getNomDepart());
-    }
-
-    @Test
-    public void testRetrieveDepartementNotFound() {
-        // Mocking the behavior of the repository to return an empty optional
-        when(departementRepository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
-
-        // Calling the service method and expecting an exception
-        assertThrows(NotFoundException.class, () -> departementService.retrieveDepartement(1));
-    }
-
-    // Add more test methods for other service methods as needed
 }

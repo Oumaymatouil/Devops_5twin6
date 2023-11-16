@@ -6,6 +6,7 @@ import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
+import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 
 import java.util.Collections;
@@ -18,6 +19,11 @@ public class DepartementServiceImpl implements IDepartementService{
     DepartementRepository departementRepository;
     @Autowired
     UniversiteRepository universiteRepository;
+
+    public DepartementServiceImpl(DepartementRepository departementRepository) {
+        this.departementRepository = departementRepository;
+    }
+
     @Override
     public List<Departement> retrieveAllDepartements() {
         return departementRepository.findAll();
