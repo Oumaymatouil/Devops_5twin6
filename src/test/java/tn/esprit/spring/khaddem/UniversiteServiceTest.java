@@ -39,7 +39,7 @@ class UniversiteServiceTest {
     Departement departement;
     List<Departement> departements;
     Universite universite;
-    Universite savedUniversite;
+ //   Universite savedUniversite;
     String notFound="introuvable universite";
 
 
@@ -51,7 +51,6 @@ class UniversiteServiceTest {
         departements.add(departement);
         universite = new Universite(1, "Universite espirt", departements);
 
-        savedUniversite = universiteRepository.save(universite);
       //  MockitoAnnotations.initMocks(this);
 
     }
@@ -63,8 +62,8 @@ class UniversiteServiceTest {
         List<Departement> departementList = new ArrayList<>();
         departementList.add(new Departement());
 
-        universites.add(new Universite(1, "Universite 1", departementList));
-        universites.add(new Universite(2, "Universite 2", departementList));
+        universites.add(new Universite(2, "Universite 1", departementList));
+        universites.add(new Universite(3, "Universite 2", departementList));
         Mockito.when(universiteRepository.findAll()).thenReturn(universites);
 
         // Calling the service method
@@ -78,41 +77,46 @@ class UniversiteServiceTest {
     @Test
     void testAddUniversite() {
         // Creating a mock Universite
-        List<Departement> departement = new ArrayList<>();
-        departement.add(new Departement());
-        Universite universite = new Universite(1, "Universite 1", departement);
+        List<Departement> departements = new ArrayList<>();
+        departements.add(new Departement());
+        Universite universite1 = new Universite(1, "Universite 1", departements);
 
         // Mocking the repository to return the saved Universite
-        Mockito.when(universiteRepository.save(Mockito.any(Universite.class))).thenReturn(universite);
+        Mockito.when(universiteRepository.save(Mockito.any(Universite.class))).thenReturn(universite1);
 
         // Calling the service method
-        Universite result = universiteService.addUniversite(universite);
+        Universite result = universiteService.addUniversite(universite1);
 
         // Asserting the result
         assertNotNull(result);
         assertEquals("Universite 1", result.getNomUniv());
-        // assertEquals("Location 1", result.getLocation());
     }
 
     @Test
     void testUpdateUniversite() {
         // Case where universite.isPresent() is true
-       // Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+        //Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
+      //  savedUniversite = universiteRepository.save(universite);
+
         Integer existingUniversiteId = 1;
-        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
+      //  Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
 
         Universite universiteUpd = new Universite(1, "Updated Universite", departements);
-        Universite updatedUniversite = universiteService.updateUniversite(universiteUpd);
-      //  verify(universiteRepository).save(updatedUniversite);
+        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
 
+        Universite updatedUniversite = universiteService.updateUniversite(universiteUpd);
+       // verify(universiteRepository.save(updatedUniversite));
+     //   Mockito.when(universiteRepository.save(Mockito.any(Universite.class))).thenReturn(universiteUpd);
+     //   verify(universiteRepository).save(any(Universite.class));
         assertNotNull(updatedUniversite);
         assertEquals("Updated Universite", updatedUniversite.getNomUniv());
+   //     System.out.println(universiteRepository.findById(1).get().getNomUniv());
 
         // Case where universite.isPresent() is false
-        Integer notExistingUniversiteId = 1;
+        Integer notExistingUniversiteId = 99;
       //  Mockito.when(universiteRepository.findById(notExistingUniversiteId)).thenReturn(Optional.empty());
-        //Mockito.when(universiteRepository.findById(notExistingUniversiteId)).thenReturn(Optional.empty());
-        Universite nonExistentUniversite = new Universite(2, "Non-existent Universite", departements);
+        Mockito.when(universiteRepository.findById(notExistingUniversiteId)).thenReturn(Optional.empty());
+        Universite nonExistentUniversite = new Universite(99, "Non-existent Universite", departements);
 
         try {
             universiteService.updateUniversite(nonExistentUniversite);
@@ -133,7 +137,7 @@ class UniversiteServiceTest {
 
 
         Universite retrievedUniversite = universiteService.retrieveUniversite(existingUniversiteId);
-
+        //System.out.println(retrievedUniversite.getNomUniv());
         verify(universiteRepository).findById(existingUniversiteId);
         assertNotNull(retrievedUniversite);
         assertEquals(universite, retrievedUniversite);

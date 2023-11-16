@@ -77,7 +77,6 @@ class UniversiteRepositoryTest {
     @Order(0)
     void testAddUniversite() {
         savedUniversite = universiteRepository.save(universite);
-
         assertNotNull(savedUniversite);
         assertEquals("Universite espirt", savedUniversite.getNomUniv());
         assertEquals(departements.size(), savedUniversite.getDepartements().size());
