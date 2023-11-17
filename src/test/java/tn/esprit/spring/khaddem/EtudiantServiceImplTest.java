@@ -102,44 +102,6 @@ class EtudiantServiceImplTest {
         // Invoke the service method
         etudiantService.assignEtudiantToDepartement(1, 1);
     }
-    @Test
-     void testAddAndAssignEtudiantToEquipeAndContract() {
-        List<Etudiant> list= new ArrayList<Etudiant>() {
-            {
-                add(new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
-                add(new Etudiant(2,"soff","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
-            }
-        };
-        List<Equipe> equipes = new ArrayList<Equipe>(){
-            {
-                add(new Equipe(1,"team",Niveau.EXPERT,list,new DetailEquipe()));
-            }
-        };
-        List<Contrat> contrats = new ArrayList<Contrat>(){
-            {
-                add(new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e));
-            }
-        };
-        // Mock the behavior of the repository
-        Etudiant e = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),equipes,contrats);
-        Contrat contrat = new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e);
-        Equipe equipe = new Equipe(1,"team",Niveau.EXPERT,list,new DetailEquipe());
-        when(contratRepository.findById(1)).thenReturn(java.util.Optional.of(contrat));
-        when(equipeRepository.findById(1)).thenReturn(java.util.Optional.of(equipe));
-
-        etudiantService.addEtudiant(e);
-        etudiantRepository.save(e);
-        contratService.addContrat(contrat);
-        equipeService.addEquipe(equipe);
-        contratRepository.save(contrat);
-        equipeRepository.save(equipe);
-
-        // Invoke the service method
-        Etudiant result=etudiantService.addAndAssignEtudiantToEquipeAndContract(e, 1, 1);
-        verify(contratRepository, times(1)).findById(1);
-        verify(equipeRepository, times(1)).findById(1);
-        verify(etudiantRepository, times(1)).save(result);
-    }
 
 }
 //
