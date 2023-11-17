@@ -12,8 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tn.esprit.spring.khaddem.KhaddemApplication;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
@@ -83,7 +81,7 @@ class EtudiantServiceImplTest {
     }
 
     @Test
-    public void testAssignEtudiantToDepartement() {
+     void testAssignEtudiantToDepartement() {
         List<Etudiant> list= new ArrayList<Etudiant>() {
             {
                 add(new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
@@ -105,7 +103,7 @@ class EtudiantServiceImplTest {
         etudiantService.assignEtudiantToDepartement(1, 1);
     }
     @Test
-    public Etudiant testAddAndAssignEtudiantToEquipeAndContract() {
+     void testAddAndAssignEtudiantToEquipeAndContract() {
         List<Etudiant> list= new ArrayList<Etudiant>() {
             {
                 add(new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
@@ -141,7 +139,6 @@ class EtudiantServiceImplTest {
         verify(contratRepository, times(1)).findById(1);
         verify(equipeRepository, times(1)).findById(1);
         verify(etudiantRepository, times(1)).save(result);
-        return result;
     }
 
 }
