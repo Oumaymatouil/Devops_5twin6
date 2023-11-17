@@ -96,7 +96,7 @@ class UniversiteServiceTest {
     void testUpdateUniversite() {
         // Case where universite.isPresent() is true
         //Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.of(universite));
-      //  savedUniversite = universiteRepository.save(universite);
+     
 
         Integer existingUniversiteId = 1;
       //  Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
