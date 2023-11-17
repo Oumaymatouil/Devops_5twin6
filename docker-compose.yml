@@ -14,7 +14,7 @@ services:
       - db:/var/lib/mysql
   app:
     container_name: kaddem
-    image: lamishammami/backend
+    image: lamis11/backend
     restart: on-failure
     environment:
       SPRING_APPLICATION_JSON: '{
