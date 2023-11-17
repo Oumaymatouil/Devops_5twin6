@@ -1,11 +1,7 @@
 package tn.esprit.spring.khaddem.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Universite implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -22,6 +19,8 @@ public class Universite implements Serializable {
     private Integer idUniversite;
     private String nomUniv;
     @OneToMany(cascade = CascadeType.ALL)
-  //  @JsonIgnore
-   private List<Departement>departements;
+    @JsonIgnore
+    private List<Departement>departements;
+
+
 }

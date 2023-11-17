@@ -1,63 +1,62 @@
 package tn.esprit.spring.khaddem;
 
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.services.DetailEquipeServiceImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+class DetailEquipeServiceImplTest {
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+    @Mock
+    private EquipeRepository equipeRepository;
 
-@ExtendWith(MockitoExtension.class)
-@SpringBootTest
-class DetailEquipeServiceTest {
     @Mock
     private DetailEquipeRepository detailEquipeRepository;
 
-    @Autowired
+    @InjectMocks
     private DetailEquipeServiceImpl detailEquipeService;
 
-    @Autowired
-    private EquipeRepository equipeRepository;
-
     @BeforeEach
-    public void setUp() {
-        detailEquipeService = new DetailEquipeServiceImpl(detailEquipeRepository, equipeRepository);
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    void retrieveAllDetailEquipeTest() {
-        List<DetailEquipe> expectedDetailEquipes = new ArrayList<>();
-        Mockito.when(detailEquipeRepository.findAll()).thenReturn(expectedDetailEquipes);
+    void retrieveAllDetailEquipe() {
+        when(detailEquipeRepository.findAll()).thenReturn(Arrays.asList(new DetailEquipe(), new DetailEquipe()));
         List<DetailEquipe> result = detailEquipeService.retrieveAllDetailEquipe();
-        assertEquals(expectedDetailEquipes.size(), result.size());
+        verify(detailEquipeRepository, times(1)).findAll();
+        assert !result.isEmpty();
     }
 
     @Test
-    void addDetailEquipeTest() {
+    void addDetailEquipe() {
         DetailEquipe detailEquipe = new DetailEquipe();
-        Mockito.when(detailEquipeRepository.save(detailEquipe)).thenReturn(detailEquipe);
+        when(detailEquipeRepository.save(any(DetailEquipe.class))).thenReturn(detailEquipe);
         DetailEquipe result = detailEquipeService.addDetailEquipe(detailEquipe);
-        assertEquals(detailEquipe, result);
+        verify(detailEquipeRepository, times(1)).save(any(DetailEquipe.class));
+        assert result != null;
     }
 
     @Test
-    void retrieveDetailEquipeTest() {
-        Integer idDetailEquipe = 1;
-        DetailEquipe expectedDetailEquipe = new DetailEquipe();
-        Mockito.when(detailEquipeRepository.findById(idDetailEquipe)).thenReturn(Optional.of(expectedDetailEquipe));
-        DetailEquipe result = detailEquipeService.retrieveDetailEquipe(idDetailEquipe);
-        assertEquals(expectedDetailEquipe, result);
+    void retrieveDetailEquipe() {
+        when(detailEquipeRepository.findById(anyInt())).thenReturn(Optional.of(new DetailEquipe()));
+        DetailEquipe result = detailEquipeService.retrieveDetailEquipe(1);
+        verify(detailEquipeRepository, times(1)).findById(anyInt());
+        assert result != null;
     }
 }

@@ -26,8 +26,6 @@ class DetailEquipeRepositoryTest {
     private DetailEquipeRepository detailEquipeRepository;
 
 
-    private PerformanceAspect performanceAspect = new PerformanceAspect();
-    private LoggingAspect loggingAspect = new LoggingAspect();
 
     @Test
     void testSaveDetailEquipe() {

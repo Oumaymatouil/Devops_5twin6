@@ -1,5 +1,7 @@
 package tn.esprit.spring.khaddem.services;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.entities.Equipe;
@@ -12,14 +14,11 @@ import java.util.Optional;
 @Service
 public class DetailEquipeServiceImpl implements IDetailEquipeService {
 
-    private final EquipeRepository equipeRepository;
+    @Autowired
+    private EquipeRepository equipeRepository;
 
-    private final DetailEquipeRepository detailEquipeRepository;
-
-    public DetailEquipeServiceImpl(DetailEquipeRepository detailEquipeRepository, EquipeRepository equipeRepository) {
-        this.detailEquipeRepository = detailEquipeRepository;
-        this.equipeRepository = equipeRepository;
-    }
+    @Autowired
+    private DetailEquipeRepository detailEquipeRepository;
 
     @Override
     public List<DetailEquipe> retrieveAllDetailEquipe() {

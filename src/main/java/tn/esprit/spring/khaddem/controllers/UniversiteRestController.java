@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.khaddem.dto.UniversiteDTO;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.services.IUniversiteService;
 import java.util.List;
@@ -22,8 +23,7 @@ public class UniversiteRestController {
     @Operation(description = "récupérer la liste des universités")
     @ResponseBody
     public List<Universite> getUniversites() {
-        List<Universite> listUniversites = universiteService.retrieveAllUniversites();
-        return listUniversites;
+        return universiteService.retrieveAllUniversites();
     }
 
     // http://localhost:8089/Kaddem/universite/retrieve-universite/8
@@ -38,21 +38,27 @@ public class UniversiteRestController {
     @PostMapping("/add-universite")
     @Operation(description = "ajouter une université")
     @ResponseBody
-    public Universite addUniversite(@RequestBody Universite u) {
-        Universite universite = universiteService.addUniversite(u);
-        return universite;
+    public Universite addUniversite(@RequestBody UniversiteDTO u) {
+        Universite universite = new Universite(u.getIdUniversite(),u.getNomUniv(),u.getDepartements());
+        return universiteService.addUniversite(universite);
     }
 
     // http://localhost:8089/Kaddem/universite/update-universite
     @PutMapping("/update-universite")
     @Operation(description = "modifier une université")
     @ResponseBody
-    public Universite updateUniversite(@RequestBody Universite u) {
-        Universite universite= universiteService.updateUniversite(u);
-        return universite;
+    public Universite updateUniversite(@RequestBody UniversiteDTO u) {
+        Universite universite = new Universite(u.getIdUniversite(),u.getNomUniv(),u.getDepartements());
+        return universiteService.updateUniversite(universite);
     }
 
-  //   http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
+    @DeleteMapping("/removeUniversite/{idUniversite}")
+    @ResponseBody
+    public void removeUniversite(@PathVariable("idUniversite") Integer idUniversite) {
+        universiteService.removeUniversite(idUniversite);
+    }
+
+    //   http://localhost:8089/Kaddem/universite/assignUniversiteToDepartement/1/1
     @PutMapping("/assignUniversiteToDepartement/{universiteId}/{departementId}")
     @Operation(description = "assigner une université à un département")
     @ResponseBody
