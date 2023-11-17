@@ -13,13 +13,14 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@AllArgsConstructor
 @Controller
 @RequestMapping("/details-equipe")
+@AllArgsConstructor
 public class DetailEquipeRestController {
 
-    @Autowired
     DetailEquipeServiceImpl detailEquipeService;
+
+
 
     // http://localhost:8089/Kaddem/equipe/retrieve-all-detail-equipes
     @GetMapping("/retrieve-all-detail-equipe")

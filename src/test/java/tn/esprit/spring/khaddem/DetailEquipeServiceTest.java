@@ -14,12 +14,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.DetailEquipe;
 import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.services.DetailEquipeServiceImpl;
 
-class DetailEquipeServiceImplTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+class DetailEquipeServiceTest {
 
     @Mock
     private EquipeRepository equipeRepository;

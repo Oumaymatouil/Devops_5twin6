@@ -10,6 +10,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tn.esprit.spring.khaddem.KhaddemApplication;
@@ -30,6 +31,7 @@ import java.util.List;
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 class EtudiantServiceImplTest {
 
     @Mock

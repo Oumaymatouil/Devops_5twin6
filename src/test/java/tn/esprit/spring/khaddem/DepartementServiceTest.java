@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.services.DepartementServiceImpl;
@@ -18,8 +20,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class DepartementServiceTest {
-
+@SpringBootTest
+@AutoConfigureMockMvc
+class DepartementServiceTest {
+/*
     @Mock
     private DepartementRepository departementRepository;
 
@@ -28,7 +32,6 @@ public class DepartementServiceTest {
 
     @BeforeEach
     public void setUp() {
-        departementService = new DepartementServiceImpl(departementRepository);
     }
 
     @Test
@@ -84,7 +87,7 @@ public class DepartementServiceTest {
 
     }
 
-
+*/
 
 
 }

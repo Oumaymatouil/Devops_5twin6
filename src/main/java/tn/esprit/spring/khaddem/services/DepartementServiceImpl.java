@@ -1,12 +1,11 @@
 package tn.esprit.spring.khaddem.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
-import tn.esprit.spring.khaddem.repositories.DetailEquipeRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 
 import java.util.Collections;
@@ -14,15 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DepartementServiceImpl implements IDepartementService{
-    @Autowired
-    DepartementRepository departementRepository;
-    @Autowired
-    UniversiteRepository universiteRepository;
+     DepartementRepository departementRepository;
+     UniversiteRepository universiteRepository;
 
-    public DepartementServiceImpl(DepartementRepository departementRepository) {
-        this.departementRepository = departementRepository;
-    }
+
+
 
     @Override
     public List<Departement> retrieveAllDepartements() {

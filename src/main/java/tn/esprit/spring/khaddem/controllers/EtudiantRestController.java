@@ -1,7 +1,8 @@
 package tn.esprit.spring.khaddem.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.khaddem.dto.EtudiantDTO;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Niveau;
 import tn.esprit.spring.khaddem.entities.Specialite;
@@ -11,17 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/etudiant")
-
+@AllArgsConstructor
 public class EtudiantRestController {
-
-    @Autowired
     IEtudiantService etudiantService;
 //    http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants
     @GetMapping("/retrieve-all-etudiants")
     @ResponseBody
     public List<Etudiant> getEtudiants() {
-        List<Etudiant> listEtudiants = etudiantService.retrieveAllEtudiants();
-        return listEtudiants;
+        return  etudiantService.retrieveAllEtudiants();
     }
 
     // http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
@@ -34,17 +32,32 @@ public class EtudiantRestController {
     // http://localhost:8089/Kaddem/etudiant/add-etudiant
     @PostMapping("/add-etudiant")
     @ResponseBody
-    public Etudiant addEtudiant(@RequestBody Etudiant e) {
-        Etudiant etudiant= etudiantService.addEtudiant(e);
-        return etudiant;
+    public Etudiant addEtudiant(@RequestBody EtudiantDTO e) {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(e.getIdEtudiant());
+        etudiant.setEquipes(e.getEquipes());
+        etudiant.setDepartement(e.getDepartement());
+        etudiant.setOp(e.getOp());
+        etudiant.setContrats(e.getContrats());
+        etudiant.setNomE(e.getNomE());
+        etudiant.setPrenomE(e.getPrenomE());
+       return etudiantService.addEtudiant(etudiant);
     }
 
     // http://localhost:8089/Kaddem/etudiant/update-etudiant
     @PutMapping("/update-etudiant")
     @ResponseBody
-    public Etudiant updateEtudiant(@RequestBody Etudiant e) {
-        Etudiant etudiant= etudiantService.updateEtudiant(e);
-        return etudiant;
+    public Etudiant updateEtudiant(@RequestBody EtudiantDTO e) {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(e.getIdEtudiant());
+        etudiant.setEquipes(e.getEquipes());
+        etudiant.setDepartement(e.getDepartement());
+        etudiant.setContrats(e.getContrats());
+        etudiant.setOp(e.getOp());
+        etudiant.setNomE(e.getNomE());
+        etudiant.setPrenomE(e.getPrenomE());
+
+       return etudiantService.updateEtudiant(etudiant);
     }
     // http://localhost:8089/Kaddem/etudiant/removeEtudiant
     @DeleteMapping("/removeEtudiant/{idEtudiant}")
@@ -92,7 +105,16 @@ public class EtudiantRestController {
     // http://localhost:8089/Kaddem/etudiant/addAndAssignEtudiantToEquipeAndContract/1/1
     @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{equipeId}/{contratId}")
     @ResponseBody
-    public void addAndAssignEtudiantToEquipeAndContract(@RequestBody Etudiant etudiant,@PathVariable("contratId") Integer contratId,@PathVariable("equipeId") Integer equipeId) {
+    public void addAndAssignEtudiantToEquipeAndContract(@RequestBody EtudiantDTO e,@PathVariable("contratId") Integer contratId,@PathVariable("equipeId") Integer equipeId) {
+
+        Etudiant etudiant = new Etudiant();
+        etudiant.setIdEtudiant(e.getIdEtudiant());
+        etudiant.setEquipes(e.getEquipes());
+        etudiant.setDepartement(e.getDepartement());
+        etudiant.setOp(e.getOp());
+        etudiant.setNomE(e.getNomE());
+        etudiant.setContrats(e.getContrats());
+        etudiant.setPrenomE(e.getPrenomE());
         etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant,contratId,equipeId);
     }
 

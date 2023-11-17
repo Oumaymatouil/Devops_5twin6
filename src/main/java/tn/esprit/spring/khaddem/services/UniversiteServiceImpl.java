@@ -1,26 +1,27 @@
 package tn.esprit.spring.khaddem.services;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
+
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-public class UniversiteServiceImpl implements  IUniversiteService{
-    @Autowired
+@AllArgsConstructor
+public class UniversiteServiceImpl implements IUniversiteService {
+
     UniversiteRepository universiteRepository;
-    @Autowired
     DepartementRepository departementRepository;
 
-    String notFound="introuvable universite";
+    private static final String NOTFOUND ="introuvable universite";
     @Override
     public List<Universite> retrieveAllUniversites() {
         return universiteRepository.findAll();
@@ -28,7 +29,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
 
     @Override
     public Universite addUniversite(Universite u) {
-        log.debug("u :"+u.getNomUniv());
+        log.debug("u :" + u.getNomUniv());
         universiteRepository.save(u);
         return u;
     }
@@ -39,7 +40,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent()) {
             return u;
         }
-        throw new NotFoundException(notFound);
+        throw new NotFoundException(NOTFOUND);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         if (universite.isPresent()) {
             return universite.get();
         }
-        throw new NotFoundException(notFound);
+        throw new NotFoundException(NOTFOUND);
 
     }
 
@@ -57,20 +58,20 @@ public class UniversiteServiceImpl implements  IUniversiteService{
         Optional<Universite> universite = universiteRepository.findById(idUniversite);
         if (universite.isPresent()) {
             universiteRepository.deleteById(idUniversite);
+        } else {
+            throw new NotFoundException(NOTFOUND);
         }
-        else{
-            throw new NotFoundException(notFound);}
     }
 
     @Transactional
     public void assignUniversiteToDepartement(Integer universiteId, Integer departementId) {
 
         Optional<Universite> universite = universiteRepository.findById(universiteId);
-        Optional<Departement> departement=departementRepository.findById(departementId);
-        if (universite.isPresent() && (departement.isPresent()) ) {
+        Optional<Departement> departement = departementRepository.findById(departementId);
+        if (universite.isPresent() && (departement.isPresent())) {
             universite.get().getDepartements().add(departement.get());
+        } else {
+            throw new NotFoundException(NOTFOUND);
         }
-        else {
-            throw new NotFoundException(notFound);}
     }
 }

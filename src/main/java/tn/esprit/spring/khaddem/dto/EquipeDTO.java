@@ -1,27 +1,22 @@
-package tn.esprit.spring.khaddem.entities;
-
+package tn.esprit.spring.khaddem.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import tn.esprit.spring.khaddem.entities.DetailEquipe;
+import tn.esprit.spring.khaddem.entities.Etudiant;
+import tn.esprit.spring.khaddem.entities.Niveau;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Equipe implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EquipeDTO {
+
     private Integer idEquipe;
 
     private String nomEquipe;
-    @Enumerated(EnumType.STRING)
     private Niveau niveau;
 
     @ManyToMany(mappedBy = "equipes",cascade = CascadeType.ALL,fetch = FetchType.EAGER)

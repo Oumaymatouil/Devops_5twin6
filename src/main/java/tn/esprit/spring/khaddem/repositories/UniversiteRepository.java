@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
 
-import java.util.List;
 
 
 @Repository

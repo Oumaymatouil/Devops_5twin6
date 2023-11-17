@@ -2,6 +2,7 @@ package tn.esprit.spring.khaddem.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 import tn.esprit.spring.khaddem.entities.Contrat;
@@ -19,8 +20,6 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 public class ContratServiceImpl implements  IContratService{
-
-
 
     ContratRepository contratRepository;
     EtudiantRepository etudiantRepository;
