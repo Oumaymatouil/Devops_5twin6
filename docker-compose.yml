@@ -6,7 +6,7 @@ services:
     ports:
       - "3306:3306"  # Map host port 3306 to container port 3306
     environment:
-      MYSQL_DATABASE: devops
+      MYSQL_DATABASE: khaddemApp
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - /DB:/docker-entrypoint-initdb.d/data.sql
