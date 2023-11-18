@@ -12,7 +12,7 @@ services:
       - db:/var/lib/mysql
 
   kaddem:
-    container_name: khaddem
+    container_name: kaddem
     image: lamis11/kaddem:4.0
     depends_on:
       - mysqldb
