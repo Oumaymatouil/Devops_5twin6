@@ -81,6 +81,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         verify(etudiantService, times(1)).addEtudiant(any(Etudiant.class));
     }
 
-    // Add similar tests for other methods...
+   @Test
+   void getEtudiants() throws Exception {
+      mockMvc.perform(get("/etudiant/retrieve-all-etudiants"))
+              .andExpect(status().isOk())
+              .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+      // Add more assertions if needed
+   }
+
+   @Test
+   void addEtudiant() throws Exception {
+      EtudiantDTO etudiantDTO = new EtudiantDTO(/* set DTO properties here */);
+
+      mockMvc.perform(post("/etudiant/add-etudiant")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content(objectMapper.writeValueAsString(etudiantDTO)))
+              .andExpect(status().isOk());
+      // Add more assertions if needed
+   }
+
+   @Test
+   void retrieveEtudiant() throws Exception {
+      mockMvc.perform(get("/etudiant/retrieve-etudiant/{etudiantId}", 1))
+              .andExpect(status().isOk());
+   }
+
+   @Test
+   void assignEtudiantToDepartement() throws Exception {
+      mockMvc.perform(put("/etudiant/assignEtudiantToDepartement/{etudiantId}/{departementId}", 1, 1))
+              .andExpect(status().isOk());
+   }
+
 
 }

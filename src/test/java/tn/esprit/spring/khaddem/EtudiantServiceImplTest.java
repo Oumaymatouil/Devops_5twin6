@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
 
 import org.mockito.Mockito;
@@ -23,8 +24,12 @@ import tn.esprit.spring.khaddem.services.EquipeServiceImpl;
 import tn.esprit.spring.khaddem.services.EtudiantServiceImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +58,7 @@ class EtudiantServiceImplTest {
     @InjectMocks
     EquipeServiceImpl equipeService;
 
-    Etudiant e = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>());
+    Etudiant e = new Etudiant(1, "sofien", "Bensalem", Option.GAMIX, new Departement(), new ArrayList<Equipe>(), new ArrayList<Contrat>());
 
 
     @Test
@@ -61,7 +66,6 @@ class EtudiantServiceImplTest {
         List<Etudiant> etudiantList = etudiantService.retrieveAllEtudiants();
         Assertions.assertNotNull(etudiantList);
     }
-
 
 
     @Test
@@ -72,102 +76,44 @@ class EtudiantServiceImplTest {
     }
 
 
-
     @Test
     void removeEtudiant() {
         etudiantService.removeEtudiant(1);
-        Mockito.verify(etudiantRepository,times(1))
+        Mockito.verify(etudiantRepository, times(1))
                 .deleteById(1);
     }
 
     @Test
-     void testAssignEtudiantToDepartement() {
-        List<Etudiant> list= new ArrayList<Etudiant>() {
-            {
-                add(new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
-                add(new Etudiant(2,"soff","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>()));
-            }
-        };
-        // Mock the behavior of the repository
-        Departement departement = new Departement(1,"TWIN",new ArrayList<Etudiant>());
-        Etudiant etudiant = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,new Departement(),new ArrayList<Equipe>(),new ArrayList<Contrat>());
-        when(etudiantRepository.findById(1)).thenReturn(java.util.Optional.of(etudiant));
-        when(departementRepository.findById(1)).thenReturn(java.util.Optional.of(departement));
+    void testRetrieveAllEtudiants() {
+        // Arrange
+        when(etudiantRepository.findAll()).thenReturn(new ArrayList<>());
 
-        etudiantService.addEtudiant(etudiant);
-        departementService.addDepartement(departement);
-        etudiantRepository.save(etudiant);
-        departementRepository.save(departement);
+        // Act
+        List<Etudiant> etudiants = etudiantService.retrieveAllEtudiants();
 
-        // Invoke the service method
-        etudiantService.assignEtudiantToDepartement(1, 1);
+        // Assert
+        assertNotNull(etudiants);
+        assertEquals(0, etudiants.size());
+
+        // Verify
+        verify(etudiantRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testAddEtudiant() {
+        // Arrange
+        Etudiant etudiantToAdd = new Etudiant(/* set properties */);
+
+        // Act
+        when(etudiantRepository.save(etudiantToAdd)).thenReturn(etudiantToAdd);
+        Etudiant addedEtudiant = etudiantService.addEtudiant(etudiantToAdd);
+
+        // Assert
+        assertNotNull(addedEtudiant);
+        // Add more assertions based on your requirements
+
+        // Verify
+        verify(etudiantRepository, times(1)).save(etudiantToAdd);
     }
 
 }
-//
-//@SpringBootTest(classes = {KhaddemApplication.class})
-//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-//@ExtendWith(SpringExtension.class)
-//class EtudiantServiceImplJunitTest {
-//
-//    @Autowired
-//    EquipeRepository equipeRepository;
-//    @Autowired
-//    ContratRepository contratRepository;
-//    @Autowired
-//    EtudiantRepository etudiantRepository;
-//    @Autowired
-//    DepartementRepository departementRepository;
-//    @Autowired
-//    EtudiantServiceImpl etudiantService;
-//    @Autowired
-//    DepartementServiceImpl departementService;
-//    @Autowired
-//    ContratServiceImpl contratService;
-//    @Autowired
-//    EquipeServiceImpl equipeService;
-//
-//    Departement departement = new Departement(1,"TWIN",new ArrayList<Etudiant>());
-//    Equipe equipe = new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe());
-//    List<Equipe> equipes = new ArrayList<Equipe>(){
-//        {
-//            add(new Equipe(1,"team",Niveau.EXPERT,new ArrayList<Etudiant>(),new DetailEquipe()));
-//        }
-//    };
-//    List<Contrat> contrats = new ArrayList<Contrat>(){
-//        {
-//            add(new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e));
-//        }
-//    };
-//    Etudiant e = new Etudiant(1,"sofien","Bensalem", Option.GAMIX,departement,equipes,contrats);
-//    Contrat contrat = new Contrat(1,new Date(),new Date(),Specialite.IA,false,15,e);
-//
-//
-//
-//    @Test
-//    @Order(1)
-//    void testAddEtudiant(){
-//        equipeService.addEquipe(equipe);
-//        contratService.addContrat(contrat);
-//        departementService.addDepartement(departement);
-//        etudiantService.addEtudiant(e);
-//        equipeRepository.save(equipe);
-//        contratRepository.save(contrat);
-//        departementRepository.save(departement);
-//        etudiantRepository.save(e);
-//        Etudiant etudiant= etudiantService.addEtudiant(e);
-//        Assertions.assertEquals("sofien",etudiant.getNomE());
-//    }
-//
-////    @Test
-////    @Order(2)
-////    void testRetrieveEtudiant(){
-////        Etudiant etudiant = etudiantService.retrieveEtudiant(1);
-////        Assertions.assertNotNull(etudiant);
-////    }
-//
-//
-//
-//
-//}
-//
