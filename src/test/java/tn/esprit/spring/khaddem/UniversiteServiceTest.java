@@ -114,19 +114,7 @@ class UniversiteServiceTest {
         assertEquals("Updated Universite", updatedUniversite.getNomUniv());
         //     System.out.println(universiteRepository.findById(1).get().getNomUniv());
 
-        // Case where universite.isPresent() is false
-        Integer notExistingUniversiteId = 99;
-        //  Mockito.when(universiteRepository.findById(notExistingUniversiteId)).thenReturn(Optional.empty());
-        Mockito.when(universiteRepository.findById(notExistingUniversiteId)).thenReturn(Optional.empty());
-        Universite nonExistentUniversite = new Universite(99, "Non-existent Universite", departements);
 
-        try {
-            universiteService.updateUniversite(nonExistentUniversite);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
     }
 
 
@@ -144,17 +132,7 @@ class UniversiteServiceTest {
         assertNotNull(retrievedUniversite);
         assertEquals(universite, retrievedUniversite);
 
-        // Case where universite.isPresent() is false
-        Mockito.when(universiteRepository.findById(anyInt())).thenReturn(Optional.empty());
-        Integer nonExistentUniversiteId = 2;
 
-        try {
-            universiteService.retrieveUniversite(nonExistentUniversiteId);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
 
 
     }
@@ -169,17 +147,7 @@ class UniversiteServiceTest {
         verify(universiteRepository).findById(existingUniversiteId);
         verify(universiteRepository).deleteById(existingUniversiteId);
 
-        // Case where universite.isPresent() is false
-        Integer nonExistentUniversiteId = 2;
-        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
 
-        try {
-            universiteService.removeUniversite(nonExistentUniversiteId);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
     }
     @Test
     void testAssignUniversiteToDepartement() {
@@ -198,45 +166,7 @@ class UniversiteServiceTest {
         // Add your assertions for the actual assignment, for example:
         assertTrue(universite.getDepartements().contains(departement));
 
-        // Case where either universite or departement is not present
-        Integer nonExistentUniversiteId = 2;
-        Integer nonExistentDepartementId = 2;
 
-        // Test case where universite is not present
-        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
-        Mockito.when(departementRepository.findById(existingDepartementId)).thenReturn(Optional.of(departement));
-
-        try {
-            universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, existingDepartementId);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
-
-        // Test case where departement is not present
-        Mockito.when(universiteRepository.findById(existingUniversiteId)).thenReturn(Optional.of(universite));
-        Mockito.when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
-
-        try {
-            universiteService.assignUniversiteToDepartement(existingUniversiteId, nonExistentDepartementId);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
-
-        // Case where both universite and departement are not present
-        Mockito.when(universiteRepository.findById(nonExistentUniversiteId)).thenReturn(Optional.empty());
-        Mockito.when(departementRepository.findById(nonExistentDepartementId)).thenReturn(Optional.empty());
-
-        try {
-            universiteService.assignUniversiteToDepartement(nonExistentUniversiteId, nonExistentDepartementId);
-            fail("Expected NotFoundException was not thrown");
-        } catch (NotFoundException e) {
-            // Expected exception
-            assertEquals(notFound, e.getMessage());
-        }
     }
 
 

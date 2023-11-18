@@ -7,11 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
+import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 import tn.esprit.spring.khaddem.services.DepartementServiceImpl;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,18 +18,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-class DepartementServiceTest {
-/*
+ class DepartementServiceTest {
+
     @Mock
     private DepartementRepository departementRepository;
 
-    @Autowired
+    @Mock
+    private UniversiteRepository  universiteRepository ;
+
     private DepartementServiceImpl departementService;
 
     @BeforeEach
     public void setUp() {
+        departementService = new DepartementServiceImpl(departementRepository , universiteRepository);
     }
 
     @Test
@@ -77,7 +76,7 @@ class DepartementServiceTest {
         when(departementRepository.save(any(Departement.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Appeler la méthode de mise à jour du service
-        Departement result = departementService.updateDepartement(updatedDepartement);
+         departementService.updateDepartement(updatedDepartement);
 
         // Assurer que le résultat est le département mis à jour
         Assertions.assertEquals(existingDepartement, updatedDepartement);
@@ -87,7 +86,7 @@ class DepartementServiceTest {
 
     }
 
-*/
+
 
 
 }
