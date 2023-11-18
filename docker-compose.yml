@@ -20,5 +20,12 @@ services:
     ports:
       - "8081:8081"
 
+  spring:
+    image: "oumaymatouil/5twin6-g2-kaddem"
+    container_name: kaddem
+    ports:
+      - "9089:9089"
+
+
 
 
