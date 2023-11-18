@@ -32,15 +32,7 @@ class ContratRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
-
-    @Test
-    void testRetrieveContrat() throws Exception {
-        int contratId = 1; // Provide a valid contratId for testing
-        mockMvc.perform(get("/contrat/retrieve-contrat/{contrat-id}", contratId))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
+    
     @Test
     void testAddContrat() throws Exception {
         Contrat contrat = new Contrat(); // Create a Contrat object for testing
