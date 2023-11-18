@@ -14,7 +14,7 @@ services:
       - internalnet
 
   spring:
-    image: docker0922d/devopsbackend
+    image: salimmahfoudhi007/devopsbackend
     container_name: test_backend
     ports:
       - "8089:8089"
