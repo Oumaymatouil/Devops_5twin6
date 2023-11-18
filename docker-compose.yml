@@ -13,7 +13,7 @@ services:
 
   devops-project:
     container_name: kaddem
-    image: lamis11/backend
+    image: lamis11/backend:4.0
     depends_on:
       - mysqldb
     build: ./
