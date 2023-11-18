@@ -11,9 +11,9 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  khaddem:
+  kaddem:
     container_name: khaddem
-    image: lamis11/khaddem:4.0
+    image: lamis11/kaddem:4.0
     depends_on:
       - mysqldb
     build: ./
