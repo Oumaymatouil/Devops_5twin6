@@ -2,7 +2,6 @@ package tn.esprit.spring.khaddem.services;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
@@ -10,7 +9,6 @@ import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.EquipeRepository;
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,20 +54,7 @@ public class EtudiantServiceImpl implements IEtudiantService {
         etudiantRepository.deleteById(idEtudiant);
     }
 
-    @Override
-    public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) {
-        Optional<Etudiant> e = etudiantRepository.findById(etudiantId);
-        if (!e.isPresent()) {
-            return;
-        }
-        Optional<Departement> d = departementRepository.findById(departementId);
-        if (!d.isPresent()) {
-            return;
-        }
-        Etudiant etudiant = e.get();
-        etudiant.setDepartement(d.get());
-        etudiantRepository.save(etudiant);
-    }
+
 
     @Override
     public List<Etudiant> findByDepartementIdDepartement(Integer idDepartement) {
@@ -91,34 +76,7 @@ public class EtudiantServiceImpl implements IEtudiantService {
         return etudiantRepository.retrieveEtudiantsByContratSpecialiteSQL(specialite);
     }
 
-    @Transactional
-    public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
 
-        Optional<Contrat> c = contratRepository.findById(idContrat);
-        if (!c.isPresent()) {
-            return null;
-        }
-        Contrat contrat = c.get();
-
-
-        Optional<Equipe> eq = equipeRepository.findById(idEquipe);
-        if (!eq.isPresent()) {
-            return null;
-        }
-        Equipe equipe = eq.get();
-
-        Etudiant etudiant = etudiantRepository.save(e);
-        List<Equipe> equipesMisesAjour = new ArrayList<>();
-        contrat.setEtudiant(etudiant);
-        if (etudiant.getEquipes() != null) {
-            equipesMisesAjour = etudiant.getEquipes();
-        }
-        equipesMisesAjour.add(equipe);
-        etudiant.setEquipes(equipesMisesAjour);
-
-
-        return e;
-    }
 
     @Override
     public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {

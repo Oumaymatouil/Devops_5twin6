@@ -106,11 +106,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
               .andExpect(status().isOk());
    }
 
-   @Test
-   void assignEtudiantToDepartement() throws Exception {
-      mockMvc.perform(put("/etudiant/assignEtudiantToDepartement/{etudiantId}/{departementId}", 1, 1))
-              .andExpect(status().isOk());
-   }
-
-
 }

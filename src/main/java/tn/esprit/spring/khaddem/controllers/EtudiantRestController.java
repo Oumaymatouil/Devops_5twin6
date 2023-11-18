@@ -49,14 +49,6 @@ public class EtudiantRestController {
     @ResponseBody
     public Etudiant updateEtudiant(@RequestBody EtudiantDTO e) {
         Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(e.getIdEtudiant());
-        etudiant.setEquipes(e.getEquipes());
-        etudiant.setDepartement(e.getDepartement());
-        etudiant.setContrats(e.getContrats());
-        etudiant.setOp(e.getOp());
-        etudiant.setNomE(e.getNomE());
-        etudiant.setPrenomE(e.getPrenomE());
-
        return etudiantService.updateEtudiant(etudiant);
     }
     // http://localhost:8089/Kaddem/etudiant/removeEtudiant
@@ -66,13 +58,7 @@ public class EtudiantRestController {
         etudiantService.removeEtudiant(idEtudiant);
     }
 
-    // http://localhost:8089/Kaddem/etudiant/assignEtudiantToDepartement/1/1
-    @PutMapping("/assignEtudiantToDepartement/{etudiantId}/{departementId}")
-    @ResponseBody
-    public void assignEtudiantToDepartement(@PathVariable("etudiantId") Integer etudiantId
-            ,@PathVariable("departementId") Integer departementId) {
-        etudiantService.assignEtudiantToDepartement(etudiantId,departementId);
-    }
+
 
     // http://localhost:8089/Kaddem/etudiant/findByDepartement/1
     @GetMapping("/findByDepartement/{departement-id}")
@@ -102,21 +88,6 @@ public class EtudiantRestController {
         return etudiantService.retrieveEtudiantsByContratSpecialiteSQL(specialite);
     }
 
-    // http://localhost:8089/Kaddem/etudiant/addAndAssignEtudiantToEquipeAndContract/1/1
-    @PostMapping("/addAndAssignEtudiantToEquipeAndContract/{equipeId}/{contratId}")
-    @ResponseBody
-    public void addAndAssignEtudiantToEquipeAndContract(@RequestBody EtudiantDTO e,@PathVariable("contratId") Integer contratId,@PathVariable("equipeId") Integer equipeId) {
-
-        Etudiant etudiant = new Etudiant();
-        etudiant.setIdEtudiant(e.getIdEtudiant());
-        etudiant.setEquipes(e.getEquipes());
-        etudiant.setDepartement(e.getDepartement());
-        etudiant.setOp(e.getOp());
-        etudiant.setNomE(e.getNomE());
-        etudiant.setContrats(e.getContrats());
-        etudiant.setPrenomE(e.getPrenomE());
-        etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant,contratId,equipeId);
-    }
 
     // http://localhost:8089/Kaddem/etudiant/getEtudiantsByDepartement/1
     @GetMapping("/getEtudiantsByDepartement/{idDepartement}")
