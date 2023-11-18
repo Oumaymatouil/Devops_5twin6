@@ -108,16 +108,12 @@ public class EtudiantServiceImpl implements IEtudiantService {
         Equipe equipe = eq.get();
 
         Etudiant etudiant = etudiantRepository.save(e);
-        log.info("contrat: " + contrat.getSpecialite());
-        log.info("equipe: " + equipe.getNomEquipe());
-        log.info("etudiant: " + etudiant.getNomE() + " " + etudiant.getPrenomE() + " " + etudiant.getOp());
         List<Equipe> equipesMisesAjour = new ArrayList<>();
         contrat.setEtudiant(etudiant);
         if (etudiant.getEquipes() != null) {
             equipesMisesAjour = etudiant.getEquipes();
         }
         equipesMisesAjour.add(equipe);
-        log.info("taille apres ajout : " + equipesMisesAjour.size());
         etudiant.setEquipes(equipesMisesAjour);
 
 
